@@ -18,12 +18,21 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+import org.firstinspires.ftc.robotcore.external.navigation.UnnormalizedAngleUnit;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class Drivetrain {
 
     HardwareMap hwMap;
+    GoBildaPinpointDriver odo;
+
+    public double oldTime=0;
+
 
     // Drive
     public DcMotorEx leftFrontDrive, leftBackDrive, rightFrontDrive, rightBackDrive;
@@ -50,6 +59,14 @@ public class Drivetrain {
         // Aux
         Intake = hwMap.get(DcMotorEx.class,"Intake");
         Flywheel = hwMap.get(DcMotorEx.class,"Flywheel");
+
+        // Odometry Computer
+        odo = hwMap.get(GoBildaPinpointDriver.class, "POC");
+        odo.setOffsets(300.0, 37.0, DistanceUnit.MM); // Not Calibrated
+        odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
+
+        odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD); // Direction
+        odo.resetPosAndIMU();
 
         // Set Modes:
         setMotorsMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
