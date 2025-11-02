@@ -16,13 +16,18 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
+import org.firstinspires.ftc.teamcode.Config.FieldOrientedCalc;
+import org.firstinspires.ftc.teamcode.Config.Odometry;
 
 import java.util.Locale;
 
 @TeleOp(name = "FO TeleOP", group = ".")
 public class FOTeleOp extends OpMode {
     Drivetrain bot;
+    FieldOrientedCalc FOcalc;
+    Odometry odometry;
 
     private ElapsedTime opmodeTimer = new ElapsedTime();
     private ElapsedTime gateTimer = new ElapsedTime();
@@ -45,6 +50,12 @@ public class FOTeleOp extends OpMode {
 
         bot = new Drivetrain(hardwareMap, opmodeTimer);
         bot.setServoPos(true);
+
+        FOcalc = new FieldOrientedCalc();
+
+        odometry = new Odometry(hardwareMap, opmodeTimer);
+
+        odometry.odo.resetPosAndIMU();
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
@@ -52,15 +63,15 @@ public class FOTeleOp extends OpMode {
     @Override
     public void start() {
         opmodeTimer.reset();
+
+        odometry.odo.resetPosAndIMU();
         bot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     @Override
     public void loop() {
 
-        bot.odo.update();
-
-        Pose2D pos = bot.odo.getPosition();
+        odometry.odo.update();
 
         // ************* DRIVE **************//
         // Drive Speed
@@ -77,7 +88,7 @@ public class FOTeleOp extends OpMode {
         double rx = gamepad1.right_stick_x;
 //
 //        double[] powers = bot.calculateMotorPowers(y,x,rx);
-        double[] powers = bot.calculateFODMotorPowers(y,x,rx);
+        double[] powers = FOcalc.calculateFODMotorPowers(y,x,rx, odometry.robotPos().getHeading(AngleUnit.RADIANS));
         bot.setMotorPowers(powers[0], powers[1], powers[2], powers[3], SPEED_MULTIPLIER);
 
 
@@ -165,8 +176,8 @@ public class FOTeleOp extends OpMode {
 //        telemetry.addData("GateState", GateState);
 //        telemetry.addData("GatePause:", recoveryPause);
 
-        String data = String.format(Locale.US, "{X: %.3f, Y: %.3f, H: %.3f}", pos.getX(DistanceUnit.MM), pos.getY(DistanceUnit.MM), pos.getHeading(AngleUnit.DEGREES));
-        telemetry.addData("Position", data);
+//        String data = String.format(Locale.US, "{X: %.3f, Y: %.3f, H: %.3f}", pos.getX(DistanceUnit.MM), pos.getY(DistanceUnit.MM), pos.getHeading(AngleUnit.DEGREES));
+//        telemetry.addData("Position", data);
 
         telemetry.addData("\nFL: ", bot.leftFrontDrive.getPower());
         telemetry.addData("BL: ", bot.leftBackDrive.getPower());

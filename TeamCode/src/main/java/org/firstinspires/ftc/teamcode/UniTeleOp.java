@@ -38,6 +38,8 @@ public class UniTeleOp extends OpMode {
 
         bot = new Drivetrain(hardwareMap, opmodeTimer);
         bot.setServoPos(true);
+//        bot.odo.resetPosAndIMU();
+
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
@@ -45,11 +47,13 @@ public class UniTeleOp extends OpMode {
     @Override
     public void start() {
         opmodeTimer.reset();
+//        bot.odo.resetPosAndIMU();
         bot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     @Override
     public void loop() {
+//        bot.odo.update();
 
         // Drive Speed
         if (gamepad1.dpad_down) {

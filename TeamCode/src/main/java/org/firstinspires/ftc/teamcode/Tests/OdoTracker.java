@@ -16,6 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.UnnormalizedAngleUnit
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
+import org.firstinspires.ftc.teamcode.Config.Odometry;
 
 import java.util.Locale;
 
@@ -23,6 +24,7 @@ import java.util.Locale;
 @TeleOp(name = "Odo Tracker", group = "Tests")
 public class OdoTracker extends OpMode {
     Drivetrain bot;
+    Odometry odometry;
 
     private ElapsedTime opmodeTimer = new ElapsedTime();
     private double SPEED_MULTIPLIER = 0.9;
@@ -35,24 +37,34 @@ public class OdoTracker extends OpMode {
     public void init() {
         opmodeTimer.reset();
 
+        odometry = new Odometry(hardwareMap, opmodeTimer);
+        odometry.odo.resetPosAndIMU();
+
         bot = new Drivetrain(hardwareMap, opmodeTimer);
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        bot.odo.resetPosAndIMU();
 
         telemetry.addData("Odo.Status", "Initialized");
-        telemetry.addData("X offset", bot.odo.getXOffset(DistanceUnit.MM));
-        telemetry.addData("Y offset", bot.odo.getYOffset(DistanceUnit.MM));
-        telemetry.addData("Device Version Number:", bot.odo.getDeviceVersion());
-        telemetry.addData("Heading Scalar", bot.odo.getYawScalar());
+        telemetry.addData("X offset", odometry.odo.getXOffset(DistanceUnit.MM));
+        telemetry.addData("Y offset", odometry.odo.getYOffset(DistanceUnit.MM));
+        telemetry.addData("Device Version Number:", odometry.odo.getDeviceVersion());
+        telemetry.addData("Heading Scalar", odometry.odo.getYawScalar());
 
         telemetry.addData("Current Speed: ", SPEED_MULTIPLIER);
+
+        telemetry.addData("\nPosX: ", odometry.odo.getPosX(DistanceUnit.MM));
+        telemetry.addData("PosY: ", odometry.odo.getPosY(DistanceUnit.MM));
+        telemetry.addData("noPos PosX: ", odometry.robotPos().getX(DistanceUnit.MM));
+        telemetry.addData("noPos PosY: ", odometry.robotPos().getY(DistanceUnit.MM));
+
         telemetry.update();
     }
 
     @Override
     public void start() {
         opmodeTimer.reset();
+        odometry.odo.resetPosAndIMU();
+
         bot.oldTime = 0;
         bot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
@@ -60,7 +72,7 @@ public class OdoTracker extends OpMode {
     @Override
     public void loop(){
         // Odo update
-        bot.odo.update();
+        odometry.odo.update();
 
         double newTime = getRuntime();
         double loopTime = newTime - bot.oldTime;
@@ -86,18 +98,18 @@ public class OdoTracker extends OpMode {
         /*
         gets the current Position (x & y in mm, and heading in degrees) of the robot, and prints it.
         */
-        Pose2D pos = bot.odo.getPosition();
+        Pose2D pos = odometry.odo.getPosition();
         String data = String.format(Locale.US, "{X: %.3f, Y: %.3f, H: %.3f}", pos.getX(DistanceUnit.MM), pos.getY(DistanceUnit.MM), pos.getHeading(AngleUnit.DEGREES));
         telemetry.addData("Position", data);
 
         /*
         gets the current Velocity (x & y in mm/sec and heading in degrees/sec) and prints it.
         */
-        String velocity = String.format(Locale.US,"{XVel: %.3f, YVel: %.3f, HVel: %.3f}", bot.odo.getVelX(DistanceUnit.MM), bot.odo.getVelY(DistanceUnit.MM), bot.odo.getHeadingVelocity(UnnormalizedAngleUnit.DEGREES));
+        String velocity = String.format(Locale.US,"{XVel: %.3f, YVel: %.3f, HVel: %.3f}", odometry.odo.getVelX(DistanceUnit.MM), odometry.odo.getVelY(DistanceUnit.MM), odometry.odo.getHeadingVelocity(UnnormalizedAngleUnit.DEGREES));
         telemetry.addData("Velocity", velocity);
 
-        telemetry.addData("Status", bot.odo.getDeviceStatus());
-        telemetry.addData("Pinpoint Frequency", bot.odo.getFrequency()); //prints/gets the current refresh rate of the Pinpoint
+        telemetry.addData("Status", odometry.odo.getDeviceStatus());
+        telemetry.addData("Pinpoint Frequency", odometry.odo.getFrequency()); //prints/gets the current refresh rate of the Pinpoint
         telemetry.addData("REV Hub Frequency: ", frequency); //prints the control system refresh rate
         telemetry.update();
 
