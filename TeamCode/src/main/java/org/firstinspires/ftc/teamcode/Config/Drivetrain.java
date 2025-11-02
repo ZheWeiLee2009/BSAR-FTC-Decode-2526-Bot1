@@ -21,7 +21,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 import java.util.Arrays;
 import java.util.List;
@@ -68,6 +70,8 @@ public class Drivetrain {
         odo.setOffsets(300.0, 37.0, DistanceUnit.MM); // Not Calibrated
         odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
 
+        double heading = odo.getHeading(AngleUnit.RADIANS);
+
         odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD); // Direction
         odo.resetPosAndIMU();
 
@@ -89,6 +93,25 @@ public class Drivetrain {
         motorPowers[3] = (axial + lateral - yaw);
         return motorPowers;
     }
+
+    public double[] calculateFODMotorPowers(double axial, double lateral, double yaw) {
+
+        Pose2D pos = odo.getPosition();
+
+        double[] motorPowers = new double[4];
+        // rotation matrix
+        double rotX = lateral * Math.cos(-pos.getHeading(AngleUnit.RADIANS)) - axial * Math.sin(-pos.getHeading(AngleUnit.RADIANS));
+        double rotY = lateral * Math.sin(-pos.getHeading(AngleUnit.RADIANS)) + axial * Math.cos(-pos.getHeading(AngleUnit.RADIANS));
+
+        motorPowers[0] = (rotY + rotX + yaw);
+        motorPowers[1] = (rotY - rotX + yaw);
+        motorPowers[2] = (rotY - rotX - yaw);
+        motorPowers[3] = (rotY + rotX - yaw);
+
+        return motorPowers;
+
+    }
+
 
     public void setMotorPowers(double v, double v1, double v2, double v3, double speedMultiplier) {
         leftFrontDrive.setPower(v * speedMultiplier * c_FL_WeightTuning);
