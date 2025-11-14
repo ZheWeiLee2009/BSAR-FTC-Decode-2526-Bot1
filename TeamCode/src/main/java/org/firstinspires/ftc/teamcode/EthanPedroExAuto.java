@@ -1,35 +1,26 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.Config.EthanPaths.Paths;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
-import org.firstinspires.ftc.teamcode.Config.EthanPaths;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
-import com.pedropathing.follower.FollowerConstants;
+import org.firstinspires.ftc.teamcode.Config.Drivetrain; // Robo Config
+import org.firstinspires.ftc.teamcode.Config.EthanPaths;
+import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-/**
- * Runs your EthanPaths.Path1 using PedroPathing
- */
-@Autonomous(name = "EthanEXPedro", group = "Autonomous")
+@Autonomous(name = "EthanEXPedroMulti", group = "Autonomous")
 public class EthanPedroExAuto extends LinearOpMode {
-
+    Drivetrain bot;
     private Follower follower;
-    private EthanPaths.Paths paths;
+    private EthanPaths paths;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        // Initialize Pedro follower
-        follower = org.firstinspires.ftc.teamcode.pedroPathing.Constants.createFollower(hardwareMap);
+        follower = Constants.createFollower(hardwareMap);
+        follower.setStartingPose(new Pose(24, 129.77, Math.toRadians(143)));
 
-        // Set starting position
-        follower.setStartingPose(new Pose(72, 8, Math.toRadians(90)));
-
-        // Build paths from EthanPaths
-        paths = new EthanPaths.Paths(follower);
+        paths = new EthanPaths(follower);
 
         telemetry.addLine("Ethan Pedro Pathing Ready!");
         telemetry.update();
@@ -38,20 +29,37 @@ public class EthanPedroExAuto extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        // Follow your first path
-        follower.followPath(paths.Path1);
+        // Sequentially follow all paths
+        bot.setIntake("full");
+        follow(paths.Path1);
+        sleep(1000);
+        bot.setFlywheel("full", 0);
+        sleep(1000);
+        follow(paths.Path2);
+        follow(paths.Path3);
+        follow(paths.Path4);
+        follow(paths.Path5);
 
-        // Keep updating follower until done
+        telemetry.addLine("✅ All paths complete!");
+        telemetry.update();
+        sleep(1000);
+    }
+
+    /** Helper method to follow one path and wait for completion */
+    private void follow(com.pedropathing.paths.PathChain path) {
+        follower.followPath(path);
+
         while (opModeIsActive() && follower.isBusy()) {
             follower.update();
 
+            telemetry.addData("Following", path);
             telemetry.addData("X", follower.getPose().getX());
             telemetry.addData("Y", follower.getPose().getY());
             telemetry.addData("Heading", Math.toDegrees(follower.getPose().getHeading()));
             telemetry.update();
         }
 
-        // Stop motors when path finishes
         follower.breakFollowing();
+        sleep(250); // small pause between paths (optional)
     }
 }
