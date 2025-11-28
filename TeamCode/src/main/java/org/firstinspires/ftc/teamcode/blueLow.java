@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.Config.Drivetrain; // Robo Config
 import org.firstinspires.ftc.teamcode.Config.EthanPaths;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "EthanEXPedroMulti", group = "Autonomous")
-public class EthanPedroExAuto extends LinearOpMode {
+@Autonomous(name = "BlueLow", group = "Autonomous")
+public class blueLow extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
@@ -48,29 +48,27 @@ public class EthanPedroExAuto extends LinearOpMode {
         follow(paths.Path1);           // drive to the line with intake holding balls
 
         // Flywheel + gate open to shoot 3 preloads
-        bot.setIntake("half");
-        bot.setFlywheel("half", 0);
-        sleep(2000);
-        bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
-        bot.setServoPos(true);
-        sleep(1400);
+        bot.setIntake("full");
+        bot.setFlywheel("full", -0.2);
 
-        bot.setFlywheel("half", 0);
-        bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
+        sleep(2500);
         bot.setServoPos(true);
-        sleep(1400);
+        sleep(500);
+        bot.setServoPos(false);
 
-        bot.setFlywheel("half", 0);
-        sleep(1400);
-        bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
+        sleep(2500);
         bot.setServoPos(true);
-        sleep(1400); // 2.5s shoot time
+        sleep(500);
+        bot.setServoPos(false);
+
+        sleep(2500);
+        bot.setServoPos(true);
+        sleep(500);
+        bot.setServoPos(false);
+        sleep(2500);
 
         bot.setFlywheel("off", 0);
-        bot.setIntake("off");          // done with preload set
+        bot.setIntake("off");
 
         // ---------- CYCLE 1 ----------
         // Collect 3, keep intake on while holding and shooting them.
@@ -81,26 +79,26 @@ public class EthanPedroExAuto extends LinearOpMode {
 
         // Shoot those 3: flywheel + gate
         bot.setIntake("half");
-        bot.setFlywheel("half", 0);
-        sleep(1400);
+        bot.setFlywheel("full", 0);
+        sleep(1500);
         bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
+        sleep(200);
         bot.setServoPos(true);
-        sleep(1400);
+        sleep(1500);
 
-        bot.setFlywheel("half", 0);
-        sleep(1400);
+        bot.setFlywheel("full", 0);
+        sleep(1500);
         bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
+        sleep(200);
         bot.setServoPos(true);
-        sleep(1400);
+        sleep(1500);
 
-        bot.setFlywheel("half", 0);
-        sleep(1400);
+        bot.setFlywheel("full", 0);
+        sleep(1500);
         bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
+        sleep(200);
         bot.setServoPos(true);
-        sleep(1400);// 2.5s shoot time
+        sleep(1500);// 2.5s shoot time
         // CLOSE gate
         bot.setFlywheel("off", 0);
         bot.setIntake("off");          // done with this set of 3
@@ -108,21 +106,21 @@ public class EthanPedroExAuto extends LinearOpMode {
         // ---------- CYCLE 2 ----------
         // Same pattern for the second set of 3.
         bot.setIntake("half");
-        bot.setFlywheel("half", 0);
+        bot.setFlywheel("full", 0);
         sleep(1400);
         bot.setServoPos(false);        // OPEN gate so balls can feed
         sleep(167);
         bot.setServoPos(true);
         sleep(1400);
 
-        bot.setFlywheel("half", 0);
+        bot.setFlywheel("full", 0);
         sleep(1400);
         bot.setServoPos(false);        // OPEN gate so balls can feed
         sleep(167);
         bot.setServoPos(true);
         sleep(1400);
 
-        bot.setFlywheel("half", 0);
+        bot.setFlywheel("full", 0);
         sleep(1400);
         bot.setServoPos(false);        // OPEN gate so balls can feed
         sleep(167);

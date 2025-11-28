@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.Config.Drivetrain; // Robo Config
 import org.firstinspires.ftc.teamcode.Config.EthanPaths;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "EthanEXPedroMulti", group = "Autonomous")
-public class EthanPedroExAuto extends LinearOpMode {
+@Autonomous(name = "BlueHigh", group = "Autonomous")
+public class blueHigh extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
@@ -49,25 +49,22 @@ public class EthanPedroExAuto extends LinearOpMode {
 
         // Flywheel + gate open to shoot 3 preloads
         bot.setIntake("half");
-        bot.setFlywheel("half", 0);
-        sleep(2000);
+        bot.setFlywheel("half", -0.07);
+        sleep(2500);
         bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
+        sleep(500);
         bot.setServoPos(true);
-        sleep(1400);
+        sleep(2500);
 
-        bot.setFlywheel("half", 0);
         bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
+        sleep(500);
         bot.setServoPos(true);
-        sleep(1400);
+        sleep(2500);
 
-        bot.setFlywheel("half", 0);
-        sleep(1400);
         bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
+        sleep(500);
         bot.setServoPos(true);
-        sleep(1400); // 2.5s shoot time
+        sleep(2500);
 
         bot.setFlywheel("off", 0);
         bot.setIntake("off");          // done with preload set

@@ -76,12 +76,12 @@ public class FOTeleOp extends OpMode {
 
         // ************* DRIVE **************//
         // Drive Speed
-        if (gamepad1.dpad_down) {
-            SPEED_MULTIPLIER = 0.5;
-        }
-        if (gamepad1.x) {
-            SPEED_MULTIPLIER = 0.9;
-        }
+//        if (gamepad1.dpad_down) {
+//            SPEED_MULTIPLIER = 0.5;
+//        }
+//        if (gamepad1.x) {
+//            SPEED_MULTIPLIER = 0.9;
+//        }
 
         // Directional Movements
         double y = -gamepad1.left_stick_y;
@@ -99,16 +99,22 @@ public class FOTeleOp extends OpMode {
             bot.setFlywheel("full", flyWheelOffset);
         } else if (gamepad1.dpad_up) {
             bot.setFlywheel("half", flyWheelOffset);
-        } else if (gamepad1.dpad_left) {
+        } else if (gamepad1.dpad_left) { // lt - 2
+            bot.setFlywheel("full", -0.1);
+        } else if (gamepad1.dpad_down) {
+            bot.setFlywheel("less-half", flyWheelOffset);
+        }
+
+        if(gamepad1.left_trigger > 0.5) {
             bot.setFlywheel("off", 0);
         }
 
         // Flywheel Offsets
-        if (gamepad2.circle) {
-            flyWheelOffset +=1;
-        } else if (gamepad2.square){
-            flyWheelOffset -=1;
-        }
+//        if (gamepad2.circle) {
+//            flyWheelOffset +=1;
+//        } else if (gamepad2.square){
+//            flyWheelOffset -=1;
+//        }
 
         // Intake
         if (gamepad1.circle) {
@@ -117,6 +123,10 @@ public class FOTeleOp extends OpMode {
             bot.setIntake("half");
         } else if (gamepad1.square) {
             bot.setIntake("off");
+        }
+
+        if (gamepad1.cross) {
+            bot.setIntake("out");
         }
 
         // Gate single

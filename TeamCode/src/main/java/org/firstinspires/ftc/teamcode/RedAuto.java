@@ -6,16 +6,16 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 
-import org.firstinspires.ftc.teamcode.Config.Drivetrain; // Robo Config
-import org.firstinspires.ftc.teamcode.Config.EthanPaths;
+import org.firstinspires.ftc.teamcode.Config.Drivetrain;
+import org.firstinspires.ftc.teamcode.Config.RedPaths;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "EthanEXPedroMulti", group = "Autonomous")
-public class EthanPedroExAuto extends LinearOpMode {
+@Autonomous(name = "RedAuto", group = "Autonomous")
+public class RedAuto extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
-    private EthanPaths paths;
+    private RedPaths paths;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -26,13 +26,13 @@ public class EthanPedroExAuto extends LinearOpMode {
         bot.setIntake("off");
         bot.setFlywheel("off", 0);
 
-        // --- Pedro follower + paths ---
+        // --- Pedro follower + paths (RED mirrored) ---
         follower = Constants.createFollower(hardwareMap);
-        follower.setStartingPose(new Pose(24, 129.77, Math.toRadians(143)));
-        paths = new EthanPaths(follower);
+        // mirrored start pose: x -> -x, heading -> π - 143° = 37°
+        follower.setStartingPose(new Pose(-24, 129.77, Math.toRadians(37)));
+        paths = new RedPaths(follower);
 
-        telemetry.addLine("Ethan Pedro Pathing Ready!");
-        telemetry.addLine("Ethan Pedro Pathing Ready!");
+        telemetry.addLine("Red Pedro Pathing Ready!");
         telemetry.update();
 
         waitForStart();
@@ -47,10 +47,11 @@ public class EthanPedroExAuto extends LinearOpMode {
         bot.setIntake("full");
         follow(paths.Path1);           // drive to the line with intake holding balls
 
-        // Flywheel + gate open to shoot 3 preloads
+        // 3 shots using HALF flywheel, 1400ms timings, matching blue auto
+
         bot.setIntake("half");
         bot.setFlywheel("half", 0);
-        sleep(2000);
+        sleep(1400);
         bot.setServoPos(false);        // OPEN gate so balls can feed
         sleep(167);
         bot.setServoPos(true);
@@ -67,7 +68,7 @@ public class EthanPedroExAuto extends LinearOpMode {
         bot.setServoPos(false);        // OPEN gate so balls can feed
         sleep(167);
         bot.setServoPos(true);
-        sleep(1400); // 2.5s shoot time
+        sleep(1400);
 
         bot.setFlywheel("off", 0);
         bot.setIntake("off");          // done with preload set
@@ -76,10 +77,9 @@ public class EthanPedroExAuto extends LinearOpMode {
         // Collect 3, keep intake on while holding and shooting them.
         bot.setIntake("full");
         follow(paths.Path2);           // drive through first stack (collect)
-        sleep(1000);
         follow(paths.Path3);           // drive back to line still holding with intake
 
-        // Shoot those 3: flywheel + gate
+        // Shoot those 3: intake half + 3 shots (same pattern as blue)
         bot.setIntake("half");
         bot.setFlywheel("half", 0);
         sleep(1400);
@@ -100,13 +100,13 @@ public class EthanPedroExAuto extends LinearOpMode {
         bot.setServoPos(false);        // OPEN gate so balls can feed
         sleep(167);
         bot.setServoPos(true);
-        sleep(1400);// 2.5s shoot time
-        // CLOSE gate
+        sleep(1400);
+
         bot.setFlywheel("off", 0);
         bot.setIntake("off");          // done with this set of 3
 
         // ---------- CYCLE 2 ----------
-        // Same pattern for the second set of 3.
+        // Same pattern for the second set of 3 (no extra paths here, mirroring blue)
         bot.setIntake("half");
         bot.setFlywheel("half", 0);
         sleep(1400);
@@ -127,15 +127,13 @@ public class EthanPedroExAuto extends LinearOpMode {
         bot.setServoPos(false);        // OPEN gate so balls can feed
         sleep(167);
         bot.setServoPos(true);
-        sleep(1400);// 2.5s shoot time
-        // CLOSE gate
+        sleep(1400);
+
         bot.setFlywheel("off", 0);
         bot.setIntake("off");          // done holding balls
 
-        follow(paths.Path6);
-
         // ---------- END ----------
-        telemetry.addLine("✅ All paths complete, 9 balls outtaken.");
+        telemetry.addLine("✅ RED auto complete, 9 balls outtaken.");
         telemetry.update();
         sleep(1000);
     }
