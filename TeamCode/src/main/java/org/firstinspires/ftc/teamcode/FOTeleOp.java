@@ -10,6 +10,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -28,6 +29,7 @@ public class FOTeleOp extends OpMode {
     Drivetrain bot;
     FieldOrientedCalc FOcalc;
     Odometry odometry;
+    private DcMotorEx Flywheel;
 
     private ElapsedTime opmodeTimer = new ElapsedTime();
     private ElapsedTime gateTimer = new ElapsedTime();
@@ -64,6 +66,7 @@ public class FOTeleOp extends OpMode {
     @Override
     public void start() {
         opmodeTimer.reset();
+        Flywheel = hardwareMap.get(DcMotorEx.class,"Flywheel");
 
         odometry.odo.resetPosAndIMU();
         bot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -102,7 +105,8 @@ public class FOTeleOp extends OpMode {
         } else if (gamepad1.dpad_left) { // lt - 2
             bot.setFlywheel("full", -0.1);
         } else if (gamepad1.dpad_down) {
-            bot.setFlywheel("less-half", flyWheelOffset);
+            Flywheel.setVelocity(1507);
+
         }
 
         if(gamepad1.left_trigger > 0.5) {

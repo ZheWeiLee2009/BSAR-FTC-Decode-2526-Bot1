@@ -1,21 +1,22 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.OldAutos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 
-import org.firstinspires.ftc.teamcode.Config.Drivetrain;
-import org.firstinspires.ftc.teamcode.Config.RedPaths;
+import org.firstinspires.ftc.teamcode.Config.Drivetrain; // Robo Config
+import org.firstinspires.ftc.teamcode.Config.EthanPaths;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-
-@Autonomous(name = "RedAuto", group = "Autonomous")
-public class RedAuto extends LinearOpMode {
+@Disabled
+@Autonomous(name = "BlueLow", group = "Autonomous")
+public class blueLow extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
-    private RedPaths paths;
+    private EthanPaths paths;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -26,13 +27,13 @@ public class RedAuto extends LinearOpMode {
         bot.setIntake("off");
         bot.setFlywheel("off", 0);
 
-        // --- Pedro follower + paths (RED mirrored) ---
+        // --- Pedro follower + paths ---
         follower = Constants.createFollower(hardwareMap);
-        // mirrored start pose: x -> -x, heading -> π - 143° = 37°
-        follower.setStartingPose(new Pose(-24, 129.77, Math.toRadians(37)));
-        paths = new RedPaths(follower);
+        follower.setStartingPose(new Pose(24, 129.77, Math.toRadians(143)));
+        paths = new EthanPaths(follower);
 
-        telemetry.addLine("Red Pedro Pathing Ready!");
+        telemetry.addLine("Ethan Pedro Pathing Ready!");
+        telemetry.addLine("Ethan Pedro Pathing Ready!");
         telemetry.update();
 
         waitForStart();
@@ -47,93 +48,93 @@ public class RedAuto extends LinearOpMode {
         bot.setIntake("full");
         follow(paths.Path1);           // drive to the line with intake holding balls
 
-        // 3 shots using HALF flywheel, 1400ms timings, matching blue auto
+        // Flywheel + gate open to shoot 3 preloads
+        bot.setIntake("full");
+        bot.setFlywheel("full", -0.2);
 
-        bot.setIntake("half");
-        bot.setFlywheel("half", 0);
-        sleep(1400);
-        bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
+        sleep(2500);
         bot.setServoPos(true);
-        sleep(1400);
+        sleep(500);
+        bot.setServoPos(false);
 
-        bot.setFlywheel("half", 0);
-        bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
+        sleep(2500);
         bot.setServoPos(true);
-        sleep(1400);
+        sleep(500);
+        bot.setServoPos(false);
 
-        bot.setFlywheel("half", 0);
-        sleep(1400);
-        bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
+        sleep(2500);
         bot.setServoPos(true);
-        sleep(1400);
+        sleep(500);
+        bot.setServoPos(false);
+        sleep(2500);
 
         bot.setFlywheel("off", 0);
-        bot.setIntake("off");          // done with preload set
+        bot.setIntake("off");
 
         // ---------- CYCLE 1 ----------
         // Collect 3, keep intake on while holding and shooting them.
         bot.setIntake("full");
         follow(paths.Path2);           // drive through first stack (collect)
+        sleep(1000);
         follow(paths.Path3);           // drive back to line still holding with intake
 
-        // Shoot those 3: intake half + 3 shots (same pattern as blue)
+        // Shoot those 3: flywheel + gate
         bot.setIntake("half");
-        bot.setFlywheel("half", 0);
-        sleep(1400);
+        bot.setFlywheel("full", 0);
+        sleep(1500);
         bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
+        sleep(200);
         bot.setServoPos(true);
-        sleep(1400);
+        sleep(1500);
 
-        bot.setFlywheel("half", 0);
-        sleep(1400);
+        bot.setFlywheel("full", 0);
+        sleep(1500);
         bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
+        sleep(200);
         bot.setServoPos(true);
-        sleep(1400);
+        sleep(1500);
 
-        bot.setFlywheel("half", 0);
-        sleep(1400);
+        bot.setFlywheel("full", 0);
+        sleep(1500);
         bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
+        sleep(200);
         bot.setServoPos(true);
-        sleep(1400);
-
+        sleep(1500);// 2.5s shoot time
+        // CLOSE gate
         bot.setFlywheel("off", 0);
         bot.setIntake("off");          // done with this set of 3
 
         // ---------- CYCLE 2 ----------
-        // Same pattern for the second set of 3 (no extra paths here, mirroring blue)
+        // Same pattern for the second set of 3.
         bot.setIntake("half");
-        bot.setFlywheel("half", 0);
+        bot.setFlywheel("full", 0);
         sleep(1400);
         bot.setServoPos(false);        // OPEN gate so balls can feed
         sleep(167);
         bot.setServoPos(true);
         sleep(1400);
 
-        bot.setFlywheel("half", 0);
+        bot.setFlywheel("full", 0);
         sleep(1400);
         bot.setServoPos(false);        // OPEN gate so balls can feed
         sleep(167);
         bot.setServoPos(true);
         sleep(1400);
 
-        bot.setFlywheel("half", 0);
+        bot.setFlywheel("full", 0);
         sleep(1400);
         bot.setServoPos(false);        // OPEN gate so balls can feed
         sleep(167);
         bot.setServoPos(true);
-        sleep(1400);
-
+        sleep(1400);// 2.5s shoot time
+        // CLOSE gate
         bot.setFlywheel("off", 0);
         bot.setIntake("off");          // done holding balls
 
+        follow(paths.Path6);
+
         // ---------- END ----------
-        telemetry.addLine("✅ RED auto complete, 9 balls outtaken.");
+        telemetry.addLine("✅ All paths complete, 9 balls outtaken.");
         telemetry.update();
         sleep(1000);
     }

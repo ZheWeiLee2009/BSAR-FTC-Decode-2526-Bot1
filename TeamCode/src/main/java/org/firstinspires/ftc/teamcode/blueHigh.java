@@ -1,12 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.teamcode.Config.RobotConstants.*;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 
-import org.firstinspires.ftc.teamcode.Config.Drivetrain; // Robo Config
+import org.firstinspires.ftc.teamcode.Config.Drivetrain;
 import org.firstinspires.ftc.teamcode.Config.EthanPaths;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
@@ -16,128 +20,95 @@ public class blueHigh extends LinearOpMode {
     private Drivetrain bot;
     private Follower follower;
     private EthanPaths paths;
+    private DcMotorEx Flywheel;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        // --- Drivetrain / mechanisms ---
         bot = new Drivetrain(hardwareMap, new ElapsedTime());
-        bot.setServoPos(true);          // gate CLOSED at start
+        bot.setServoPos(true);
         bot.setIntake("off");
         bot.setFlywheel("off", 0);
 
-        // --- Pedro follower + paths ---
         follower = Constants.createFollower(hardwareMap);
-        follower.setStartingPose(new Pose(24, 129.77, Math.toRadians(143)));
+        follower.setStartingPose(new Pose(18.155, 121.307, Math.toRadians(143)));
+
         paths = new EthanPaths(follower);
 
-        telemetry.addLine("Ethan Pedro Pathing Ready!");
-        telemetry.addLine("Ethan Pedro Pathing Ready!");
-        telemetry.update();
+        Flywheel = hardwareMap.get(DcMotorEx.class, "Flywheel");
 
         waitForStart();
         if (isStopRequested()) return;
 
-        // =============================
-        //         AUTON SEQUENCE
-        // =============================
+        // ============================
+        //       AUTON SEQUENCE
+        // ============================
 
-        // ---------- PRELOADS ----------
-        // Intake ON immediately and stay on until after 3 preloads are outtaken.
+        bot.setMotorPowers(1, 1, 1, 1, .6);
+        follower.setMaxPower(.7);
         bot.setIntake("full");
-        follow(paths.Path1);           // drive to the line with intake holding balls
 
-        // Flywheel + gate open to shoot 3 preloads
+        follow(paths.Path1);
+
+        // PRELOAD SHOOTING
         bot.setIntake("half");
-        bot.setFlywheel("half", -0.07);
-        sleep(2500);
-        bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(500);
-        bot.setServoPos(true);
-        sleep(2500);
-
-        bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(500);
-        bot.setServoPos(true);
-        sleep(2500);
-
-        bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(500);
-        bot.setServoPos(true);
-        sleep(2500);
+        shootTriple();
 
         bot.setFlywheel("off", 0);
-        bot.setIntake("off");          // done with preload set
+        bot.setIntake("off");
 
-        // ---------- CYCLE 1 ----------
-        // Collect 3, keep intake on while holding and shooting them.
+        // ------- CYCLE 1 -------
         bot.setIntake("full");
-        follow(paths.Path2);           // drive through first stack (collect)
-        sleep(1000);
-        follow(paths.Path3);           // drive back to line still holding with intake
+        follow(paths.Path2);
+        sleep(900);
+        follow(paths.Path3);
 
-        // Shoot those 3: flywheel + gate
         bot.setIntake("half");
-        bot.setFlywheel("half", 0);
-        sleep(1400);
-        bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
-        bot.setServoPos(true);
-        sleep(1400);
+        shootTriple();
 
-        bot.setFlywheel("half", 0);
-        sleep(1400);
-        bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
-        bot.setServoPos(true);
-        sleep(1400);
-
-        bot.setFlywheel("half", 0);
-        sleep(1400);
-        bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
-        bot.setServoPos(true);
-        sleep(1400);// 2.5s shoot time
-        // CLOSE gate
         bot.setFlywheel("off", 0);
-        bot.setIntake("off");          // done with this set of 3
+        bot.setIntake("off");
 
-        // ---------- CYCLE 2 ----------
-        // Same pattern for the second set of 3.
+        // ------- CYCLE 2 -------
         bot.setIntake("half");
-        bot.setFlywheel("half", 0);
-        sleep(1400);
-        bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
-        bot.setServoPos(true);
-        sleep(1400);
+        shootTripleHalf();
 
-        bot.setFlywheel("half", 0);
-        sleep(1400);
-        bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
-        bot.setServoPos(true);
-        sleep(1400);
-
-        bot.setFlywheel("half", 0);
-        sleep(1400);
-        bot.setServoPos(false);        // OPEN gate so balls can feed
-        sleep(167);
-        bot.setServoPos(true);
-        sleep(1400);// 2.5s shoot time
-        // CLOSE gate
         bot.setFlywheel("off", 0);
-        bot.setIntake("off");          // done holding balls
+        bot.setIntake("off");
 
         follow(paths.Path6);
 
-        // ---------- END ----------
-        telemetry.addLine("✅ All paths complete, 9 balls outtaken.");
+        telemetry.addLine("Auton Complete.");
         telemetry.update();
-        sleep(1000);
+        sleep(500);
     }
 
-    /** Helper method to follow one path and wait for completion */
+    // ========================
+    // Helper Methods
+    // ========================
+
+    private void shootTriple() throws InterruptedException {
+        for (int i = 0; i < 3; i++) {
+            Flywheel.setVelocity(1507);
+            sleep(1400);
+            bot.setServoPos(false);
+            sleep(160);
+            bot.setServoPos(true);
+            sleep(1200);
+        }
+    }
+
+    private void shootTripleHalf() throws InterruptedException {
+        for (int i = 0; i < 3; i++) {
+            bot.setFlywheel("half", 0);
+            sleep(1400);
+            bot.setServoPos(false);
+            sleep(160);
+            bot.setServoPos(true);
+            sleep(1200);
+        }
+    }
+
     private void follow(com.pedropathing.paths.PathChain path) {
         follower.followPath(path);
 
@@ -152,6 +123,6 @@ public class blueHigh extends LinearOpMode {
         }
 
         follower.breakFollowing();
-        sleep(250); // small pause between paths (optional)
+        sleep(200);
     }
 }
