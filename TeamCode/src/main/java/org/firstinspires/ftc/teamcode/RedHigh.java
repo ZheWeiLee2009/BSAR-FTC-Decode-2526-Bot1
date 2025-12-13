@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.Config.EthanPaths;
 import org.firstinspires.ftc.teamcode.Config.RedPaths;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "RedHighAuto", group = "Autonomous")
+@Autonomous(name = "RedHigh", group = "Autonomous")
 public class RedHigh extends LinearOpMode {
 
     private Drivetrain bot;
@@ -50,33 +50,32 @@ public class RedHigh extends LinearOpMode {
         bot.setMotorPowers(1, 1, 1, 1, .6);
         follower.setMaxPower(.7);
         bot.setIntake("full");
-
+        Flywheel.setVelocity(1527);
         follow(paths.Path1);
 
         // PRELOAD SHOOTING
         bot.setIntake("half");
         shootTriple();
 
-        bot.setFlywheel("off", 0);
         bot.setIntake("off");
 
         // ------- CYCLE 1 -------
         bot.setIntake("full");
+        follower.setMaxPower(.5);
         follow(paths.Path2);
         sleep(900);
+        follower.setMaxPower(.7);
         follow(paths.Path3);
 
         bot.setIntake("half");
         shootTriple();
 
-        bot.setFlywheel("off", 0);
         bot.setIntake("off");
 
         // ------- CYCLE 2 -------
         bot.setIntake("half");
         shootTriple();
 
-        bot.setFlywheel("off", 0);
         bot.setIntake("off");
 
         follow(paths.Path6);
@@ -92,8 +91,7 @@ public class RedHigh extends LinearOpMode {
 
     private void shootTriple() throws InterruptedException {
         for (int i = 0; i < 3; i++) {
-            Flywheel.setVelocity(1507);
-            sleep(1400);
+            sleep(160);
             bot.setServoPos(false);
             sleep(160);
             bot.setServoPos(true);

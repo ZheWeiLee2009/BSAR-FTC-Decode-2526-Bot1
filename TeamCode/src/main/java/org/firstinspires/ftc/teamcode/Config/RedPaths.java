@@ -35,7 +35,7 @@ public class RedPaths {
                 .addPath(new BezierCurve(
                         new Pose(81.536, 80.424),
                         new Pose(84.238, 89.166),
-                        new Pose(129.536, 87.258)
+                        new Pose(125.722, 83.126)
                 ))
                 .setLinearHeadingInterpolation(
                         Math.toRadians(37),
@@ -46,7 +46,7 @@ public class RedPaths {
         // ------------------ Path 3 ------------------
         Path3 = follower.pathBuilder()
                 .addPath(new BezierCurve(
-                        new Pose(129.536, 87.258),
+                        new Pose(125.722, 83.126),
                         new Pose(65.960, 67.073),
                         new Pose(81.536, 80.583)
                 ))
