@@ -32,7 +32,7 @@ import java.util.List;
 // ----------------------
 
 @TeleOp(name = "Red FO TeleOP", group = ".")
-public class RedFOTeleOp extends OpMode {
+public class RedFOTeleop extends OpMode {
     Drivetrain bot;
     FieldOrientedCalc FOcalc;
     Odometry odometry;
@@ -110,14 +110,15 @@ public class RedFOTeleOp extends OpMode {
         odometry.odo.update();
 
         // --- IMU CALIBRATION LOGIC (SHARE/BACK BUTTON) ---
-        boolean backButtonCurrState = gamepad1.back;
+//        boolean backButtonCurrState = gamepad1.back;
         // Check for a press: only run if button is currently pressed AND was NOT pressed last loop
-        if (backButtonCurrState && !backButtonPrevState) { 
+        if (gamepad1.share && gamepad1.options) {
             // Trigger the position reset and IMU recalibration
             odometry.odo.resetPosAndIMU(); 
             telemetry.addLine("*** IMU Recalibrated & Position Reset! ***");
+
         }
-        backButtonPrevState = backButtonCurrState;
+//        backButtonPrevState = backButtonCurrState;
         // -------------------------------------------------
 
 
@@ -266,7 +267,7 @@ public class RedFOTeleOp extends OpMode {
         telemetry.addData("GateTimer:", gateTimer.milliseconds());
         telemetry.addData("GateState", GateState);
         telemetry.addData("GatePause:", recoveryPause);
-        telemetry.addData("IMU Status:", backButtonCurrState ? "RESETTING..." : "Ready (Press SHARE)");
+//        telemetry.addData("IMU Status:", backButtonCurrState ? "RESETTING..." : "Ready (Press SHARE)");
 
 
         // --- APRILTAG TELEMETRY ---

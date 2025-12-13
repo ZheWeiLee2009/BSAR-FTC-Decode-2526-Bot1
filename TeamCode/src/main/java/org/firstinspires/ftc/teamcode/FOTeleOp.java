@@ -87,6 +87,13 @@ public class FOTeleOp extends OpMode {
 //            SPEED_MULTIPLIER = 0.9;
 //        }
 
+        if (gamepad1.share && gamepad1.options) {
+            // Trigger the position reset and IMU recalibration
+            odometry.odo.resetPosAndIMU();
+            telemetry.addLine("*** IMU Recalibrated & Position Reset! ***");
+
+        }
+
         // Directional Movements
         double y = -gamepad1.left_stick_y;
         double x = gamepad1.left_stick_x;
@@ -189,6 +196,7 @@ public class FOTeleOp extends OpMode {
             bot.setServoPos(true);
         }
 
+
         // Telemetry
         telemetry.addData("Flywheel: ", bot.Flywheel.getPower());
         telemetry.addData("Intake: ", bot.Intake.getPower());
@@ -203,6 +211,10 @@ public class FOTeleOp extends OpMode {
         telemetry.addData("BR: ", bot.rightBackDrive.getPower());
 
         telemetry.addData("\n\n Full Power: ", SPEED_MULTIPLIER);
+
+        Pose2D pos = odometry.odo.getPosition();
+        String data = String.format(Locale.US, "{X: %.3f, Y: %.3f, H: %.3f}", pos.getX(DistanceUnit.MM), pos.getY(DistanceUnit.MM), pos.getHeading(AngleUnit.DEGREES));
+        telemetry.addData("Position", data);
 
         telemetry.update();
 
