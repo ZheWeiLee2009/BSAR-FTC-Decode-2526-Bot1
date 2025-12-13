@@ -23,13 +23,13 @@ import org.firstinspires.ftc.teamcode.Config.Odometry;
 
 import java.util.Locale;
 
-// --- NEW IMPORTS FOR VISION ---
+// --- VISION IMPORTS ---
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
-// ------------------------------
+// ----------------------
 
 @TeleOp(name = "Red FO TeleOP", group = ".")
 public class RedFOTeleOp extends OpMode {
@@ -51,7 +51,7 @@ public class RedFOTeleOp extends OpMode {
     private int cycleCounter = 0;
     private int flyWheelOffset = 0;
 
-    // --- NEW APRILTAG DECLARATIONS ---
+    // --- APRILTAG DECLARATIONS ---
     private static final int TARGET_TAG_ID = 24;      // Target ID set to 24 for Red Alliance
     private static final double HEADING_P_GAIN = 0.03; // Tuned P-Gain for rotation
     private static final double MAX_TURN_POWER = 0.5; // Max speed for the auto-correction
@@ -61,6 +61,10 @@ public class RedFOTeleOp extends OpMode {
     private boolean isLocked = false;
     private boolean lockButtonPrevState = false; // Tracks L3 button state for toggle
     // ---------------------------------
+    
+    // --- IMU CALIBRATION DECLARATION ---
+    private boolean backButtonPrevState = false; // Tracks SHARE/BACK button for IMU reset
+    // ---------------------------------------
 
 
     @Override
@@ -79,7 +83,7 @@ public class RedFOTeleOp extends OpMode {
         // --- VISION INITIALIZATION ---
         aprilTagProcessor = new AprilTagProcessor.Builder().build();
 
-        // Use the Camera Name configured
+        // Use the Camera Name c
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam"))
                 .addProcessor(aprilTagProcessor)
@@ -105,6 +109,18 @@ public class RedFOTeleOp extends OpMode {
 
         odometry.odo.update();
 
+        // --- IMU CALIBRATION LOGIC (SHARE/BACK BUTTON) ---
+        boolean backButtonCurrState = gamepad1.back;
+        // Check for a press: only run if button is currently pressed AND was NOT pressed last loop
+        if (backButtonCurrState && !backButtonPrevState) { 
+            // Trigger the position reset and IMU recalibration
+            odometry.odo.resetPosAndIMU(); 
+            telemetry.addLine("*** IMU Recalibrated & Position Reset! ***");
+        }
+        backButtonPrevState = backButtonCurrState;
+        // -------------------------------------------------
+
+
         // ************* DRIVE **************//
         // Directional Movements
         double y = -gamepad1.left_stick_y;
@@ -112,7 +128,7 @@ public class RedFOTeleOp extends OpMode {
         double rx = gamepad1.right_stick_x; // Driver rotational input
 
         
-        // --- APRILTAG CONTROL LOGIC ---
+        // --- APRILTAG CONTROL LOGIC (L3 BUTTON) ---
         
         // L3 Button Toggle Logic
         boolean lockButtonCurrState = gamepad1.left_stick_button;
@@ -250,8 +266,10 @@ public class RedFOTeleOp extends OpMode {
         telemetry.addData("GateTimer:", gateTimer.milliseconds());
         telemetry.addData("GateState", GateState);
         telemetry.addData("GatePause:", recoveryPause);
+        telemetry.addData("IMU Status:", backButtonCurrState ? "RESETTING..." : "Ready (Press SHARE)");
 
-        // --- UPDATED TELEMETRY FOR APRILTAG ---
+
+        // --- APRILTAG TELEMETRY ---
         telemetry.addData("--- AprilTag Lock (L3) ---", "");
         telemetry.addData("Lock Status", isLocked ? "LOCKED" : "UNLOCKED");
         if (targetDetection != null) {
