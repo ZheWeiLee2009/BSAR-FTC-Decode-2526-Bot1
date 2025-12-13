@@ -14,69 +14,99 @@ public class RedPaths {
     public PathChain Path4;
     public PathChain Path5;
     public PathChain Path6;
+    public PathChain Path7;
 
     public RedPaths(Follower follower) {
 
-        // === Path1 (Mirror Blue Path1) ===
+        // ------------------ Path 1 ------------------
         Path1 = follower.pathBuilder()
-                .addPath(new BezierCurve(
-                        new Pose(-23.931, 129.765),
-                        new Pose(-48.481, 96.138),
-                        new Pose(-63.865, 84.462)
+                .addPath(new BezierLine(
+                        new Pose(126.040, 120.954),
+                        new Pose(81.536, 80.424)
                 ))
                 .setLinearHeadingInterpolation(
                         Math.toRadians(37),
-                        Math.toRadians(49)
+                        Math.toRadians(37)
                 )
                 .build();
 
-        // === Path2 (Mirror Blue Path2) ===
+        // ------------------ Path 2 ------------------
         Path2 = follower.pathBuilder()
-                .addPath(new BezierLine(
-                        new Pose(-63.865, 84.462),
-                        new Pose(-23.538, 84.981)
+                .addPath(new BezierCurve(
+                        new Pose(81.536, 80.424),
+                        new Pose(84.238, 89.166),
+                        new Pose(125.722, 83.126)
                 ))
-                .setTangentHeadingInterpolation()
+                .setLinearHeadingInterpolation(
+                        Math.toRadians(37),
+                        Math.toRadians(1)
+                )
                 .build();
 
-        // === Path3 (Mirror Blue Path3) ===
+        // ------------------ Path 3 ------------------
         Path3 = follower.pathBuilder()
                 .addPath(new BezierCurve(
-                        new Pose(-23.538, 84.981),
-                        new Pose(-60.577, 70.615),
-                        new Pose(-63.692, 84.635)
+                        new Pose(125.722, 83.126),
+                        new Pose(65.960, 67.073),
+                        new Pose(81.536, 80.583)
                 ))
-                .setTangentHeadingInterpolation()
+                .setLinearHeadingInterpolation(
+                        Math.toRadians(1),
+                        Math.toRadians(37)
+                )
                 .build();
 
-        // === Path4 (Mirror Blue Path4) ===
+        // ------------------ Path 4 ------------------
         Path4 = follower.pathBuilder()
                 .addPath(new BezierCurve(
-                        new Pose(-63.692, 84.635),
-                        new Pose(-61.615, 54.346),
-                        new Pose(-20.011, 59.415)
+                        new Pose(81.536, 80.583),
+                        new Pose(97.272, 57.377),
+                        new Pose(129.854, 59.285)
                 ))
-                .setTangentHeadingInterpolation()
+                .setLinearHeadingInterpolation(
+                        Math.toRadians(37),
+                        Math.toRadians(37)
+                )
                 .build();
 
-        // === Path5 (Mirror Blue Path5) ===
+        // ------------------ Path 5 ------------------
         Path5 = follower.pathBuilder()
                 .addPath(new BezierCurve(
-                        new Pose(-20.011, 59.415),
-                        new Pose(-66.288, 58.154),
-                        new Pose(-63.692, 84.115)
+                        new Pose(129.854, 59.285),
+                        new Pose(62.305, 61.828),
+                        new Pose(81.536, 80.742)
                 ))
-                .setTangentHeadingInterpolation()
+                .setLinearHeadingInterpolation(
+                        Math.toRadians(37),
+                        Math.toRadians(37)
+                )
                 .build();
 
-        // === Path6 (Mirror Blue Path6) ===
+        // ------------------ Path 6 (BACKWARDS!!) ------------------
         Path6 = follower.pathBuilder()
                 .addPath(new BezierCurve(
-                        new Pose(-63.692, 84.115),
-                        new Pose(-52.788, 57.981),
-                        new Pose(-10.904, 61.615)
+                        new Pose(81.536, 80.742),
+                        new Pose(64.689, 30.675),
+                        new Pose(130.172, 35.126)
                 ))
-                .setTangentHeadingInterpolation()
+                // Robot drives backward while facing 180°
+                .setLinearHeadingInterpolation(
+                        Math.toRadians(180),
+                        Math.toRadians(180)
+                )
+                .build();
+
+        // ------------------ Path 7 ------------------
+        Path7 = follower.pathBuilder()
+                .addPath(new BezierCurve(
+                        new Pose(130.172, 35.126),
+                        new Pose(64.530, 63.258),
+                        new Pose(81.536, 80.583)
+                ))
+                .setLinearHeadingInterpolation(
+                        Math.toRadians(37),
+                        Math.toRadians(37)
+                )
                 .build();
     }
 }
