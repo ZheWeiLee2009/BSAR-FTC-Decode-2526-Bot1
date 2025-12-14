@@ -109,7 +109,7 @@ public class FOTeleOp extends OpMode {
         } else if (gamepad1.dpad_left) { // lt - 2
             bot.setFlywheel("full", -0.1);
         } else if (gamepad1.dpad_down) {
-            Flywheel.setVelocity(1550);
+            Flywheel.setVelocity(1507);
 
         }
 

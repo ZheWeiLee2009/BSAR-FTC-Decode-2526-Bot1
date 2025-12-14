@@ -10,10 +10,16 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
 import org.firstinspires.ftc.teamcode.Config.EthanPaths;
+import org.firstinspires.ftc.teamcode.Config.Odometry;
 import org.firstinspires.ftc.teamcode.Config.RedPaths;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
+
+import java.util.Locale;
 
 @Autonomous(name = "RedHigh", group = "Autonomous")
 public class RedHigh extends LinearOpMode {
@@ -50,12 +56,12 @@ public class RedHigh extends LinearOpMode {
         bot.setMotorPowers(1, 1, 1, 1, .6);
         follower.setMaxPower(.7);
         bot.setIntake("full");
-        Flywheel.setVelocity(1527);
+        Flywheel.setVelocity(1502);
         follow(paths.Path1);
 
         // PRELOAD SHOOTING
         bot.setIntake("half");
-        shootTriple();
+        release();
 
         bot.setIntake("off");
 
@@ -65,16 +71,17 @@ public class RedHigh extends LinearOpMode {
         follow(paths.Path2);
         sleep(900);
         follower.setMaxPower(.7);
+        Flywheel.setVelocity(1502);
         follow(paths.Path3);
 
         bot.setIntake("half");
-        shootTriple();
+        release();
 
         bot.setIntake("off");
 
         // ------- CYCLE 2 -------
         bot.setIntake("half");
-        shootTriple();
+        release();
 
         bot.setIntake("off");
 
@@ -88,6 +95,11 @@ public class RedHigh extends LinearOpMode {
     // ========================
     // Helper Methods
     // ========================
+    private void release() throws InterruptedException{
+        bot.setServoPos(false);
+        sleep(3000);
+        bot.setServoPos(true);
+    }
 
     private void shootTriple() throws InterruptedException {
         for (int i = 0; i < 3; i++) {
@@ -110,6 +122,11 @@ public class RedHigh extends LinearOpMode {
             telemetry.addData("Y", follower.getPose().getY());
             telemetry.addData("Heading", Math.toDegrees(follower.getPose().getHeading()));
             telemetry.update();
+
+//            Pose2D pos = odometry.odo.getPosition();
+//            String data = String.format(Locale.US, "{X: %.3f, Y: %.3f, H: %.3f}", pos.getX(DistanceUnit.MM), pos.getY(DistanceUnit.MM), pos.getHeading(AngleUnit.DEGREES));
+//            telemetry.addData("Position", data);
+
         }
 
         follower.breakFollowing();

@@ -67,14 +67,11 @@ public class EthanPaths {
                 .addPath(
                         new BezierCurve(
                                 new Pose(53.433, 89.948),
-                                new Pose(66.842, 61.891),
+                                new Pose(69.775, 58.490),
                                 new Pose(19.393, 59.209)
                         )
                 )
-                .setLinearHeadingInterpolation(
-                        Math.toRadians(134),
-                        Math.toRadians(-177)
-                )
+                .setTangentHeadingInterpolation()
                 .build();
 
         Path5 = follower
@@ -82,14 +79,11 @@ public class EthanPaths {
                 .addPath(
                         new BezierCurve(
                                 new Pose(19.393, 59.209),
-                                new Pose(84.585, 66.842),
+                                new Pose(77.404, 66.437),
                                 new Pose(53.226, 89.948)
                         )
                 )
-                .setLinearHeadingInterpolation(
-                        Math.toRadians(-177),
-                        Math.toRadians(134)
-                )
+                .setTangentHeadingInterpolation()
                 .build();
 
         Path6 = follower

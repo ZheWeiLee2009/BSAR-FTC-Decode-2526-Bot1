@@ -26,7 +26,7 @@ public class RedPaths {
                 ))
                 .setLinearHeadingInterpolation(
                         Math.toRadians(37),
-                        Math.toRadians(37)
+                        Math.toRadians(42)
                 )
                 .build();
 
@@ -38,7 +38,7 @@ public class RedPaths {
                         new Pose(125.722, 83.126)
                 ))
                 .setLinearHeadingInterpolation(
-                        Math.toRadians(37),
+                        Math.toRadians(42),
                         Math.toRadians(1)
                 )
                 .build();
@@ -52,7 +52,7 @@ public class RedPaths {
                 ))
                 .setLinearHeadingInterpolation(
                         Math.toRadians(1),
-                        Math.toRadians(37)
+                        Math.toRadians(42)
                 )
                 .build();
 
@@ -64,8 +64,8 @@ public class RedPaths {
                         new Pose(129.854, 59.285)
                 ))
                 .setLinearHeadingInterpolation(
-                        Math.toRadians(37),
-                        Math.toRadians(37)
+                        Math.toRadians(42),
+                        Math.toRadians(42)
                 )
                 .build();
 
@@ -77,8 +77,8 @@ public class RedPaths {
                         new Pose(81.536, 80.742)
                 ))
                 .setLinearHeadingInterpolation(
-                        Math.toRadians(37),
-                        Math.toRadians(37)
+                        Math.toRadians(42),
+                        Math.toRadians(42)
                 )
                 .build();
 
@@ -104,8 +104,8 @@ public class RedPaths {
                         new Pose(81.536, 80.583)
                 ))
                 .setLinearHeadingInterpolation(
-                        Math.toRadians(37),
-                        Math.toRadians(37)
+                        Math.toRadians(42),
+                        Math.toRadians(42)
                 )
                 .build();
     }
