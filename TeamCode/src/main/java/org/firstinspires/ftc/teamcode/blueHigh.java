@@ -44,8 +44,8 @@ public class blueHigh extends LinearOpMode {
         //       AUTON SEQUENCE
         // ============================
 
-        bot.setMotorPowers(1, 1, 1, 1, .6);
-        follower.setMaxPower(.7);
+        bot.setMotorPowers(1, 1, 1, 1, .85);
+        follower.setMaxPower(1);
         bot.setIntake("full");
 
         follow(paths.Path1);
@@ -60,23 +60,36 @@ public class blueHigh extends LinearOpMode {
         // ------- CYCLE 1 -------
         bot.setIntake("full");
         follow(paths.Path2);
-        sleep(900);
+        sleep(100);
         follow(paths.Path3);
 
         bot.setIntake("half");
         shootTriple();
 
-        bot.setFlywheel("off", 0);
+
         bot.setIntake("off");
 
         // ------- CYCLE 2 -------
+        bot.setIntake("full");
+        follow(paths.Path4);
+        sleep(100);
+        follow(paths.Path5);
+
         bot.setIntake("half");
-        shootTripleHalf();
+        shootTriple();
 
-        bot.setFlywheel("off", 0);
+
         bot.setIntake("off");
-
+        // ----CYCLE 3---------
+        bot.setIntake("full");
         follow(paths.Path6);
+        sleep(100);
+        follow(paths.Path7);
+
+        bot.setIntake("half");
+        shootTriple();
+
+        bot.setIntake("off");
 
         telemetry.addLine("Auton Complete.");
         telemetry.update();
@@ -89,12 +102,12 @@ public class blueHigh extends LinearOpMode {
 
     private void shootTriple() throws InterruptedException {
         Flywheel.setVelocity(1357);
-        sleep(1600);
+        sleep(1600); // orig: 1600
         for (int i = 0; i < 3; i++) {
-            bot.setServoPos(false);
+            bot.fullDown();
             sleep(160);
             bot.setServoPos(true);
-            sleep(1200);
+            sleep(900); // orig: 1200
         }
     }
 
@@ -102,7 +115,7 @@ public class blueHigh extends LinearOpMode {
         for (int i = 0; i < 3; i++) {
             bot.setFlywheel("half", 0);
             sleep(1400);
-            bot.setServoPos(false);
+            bot.fullDown();
             sleep(160);
             bot.setServoPos(true);
             sleep(1200);

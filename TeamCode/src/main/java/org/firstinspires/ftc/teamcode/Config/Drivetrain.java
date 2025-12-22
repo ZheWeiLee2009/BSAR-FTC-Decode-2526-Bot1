@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Config;
 
+import static org.firstinspires.ftc.teamcode.Config.RobotConstants.Gate_Full_Off;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.Gate_Off;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.Gate_On;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.INTAKE_OUT;
@@ -113,6 +114,9 @@ public class Drivetrain {
         } else {// redundancy
             Gate.setPosition(Gate_Off);
         }
+    }
+    public void fullDown() {
+            Gate.setPosition(Gate_Full_Off);
     }
 
     public void setFlywheel(String dir, double offset) {

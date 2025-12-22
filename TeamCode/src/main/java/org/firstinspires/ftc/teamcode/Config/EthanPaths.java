@@ -92,7 +92,7 @@ public class EthanPaths {
                         new BezierCurve(
                                 new Pose(53.226, 89.948),
                                 new Pose(82.315, 34.659),
-                                new Pose(16.298, 35.691)
+                                new Pose(16.827, 35.234)
                         )
                 )
                 .setLinearHeadingInterpolation(
@@ -105,7 +105,7 @@ public class EthanPaths {
                 .pathBuilder()
                 .addPath(
                         new BezierCurve(
-                                new Pose(16.298, 35.691),
+                                new Pose(16.827, 35.234),
                                 new Pose(85.822, 56.115),
                                 new Pose(53.226, 89.742)
                         )
