@@ -44,18 +44,20 @@ public class blueHigh extends LinearOpMode {
         //       AUTON SEQUENCE
         // ============================
 
+
         bot.setMotorPowers(1, 1, 1, 1, .85);
-        follower.setMaxPower(1);
+        follower.setMaxPower(.85);
         bot.setIntake("full");
 
         follow(paths.Path1);
 
         // PRELOAD SHOOTING
         bot.setIntake("half");
+        Flywheel.setVelocity(1387);
         shootTriple();
 
-        bot.setFlywheel("off", 0);
         bot.setIntake("off");
+        Flywheel.setVelocity(0);
 
         // ------- CYCLE 1 -------
         bot.setIntake("full");
@@ -64,10 +66,12 @@ public class blueHigh extends LinearOpMode {
         follow(paths.Path3);
 
         bot.setIntake("half");
+        Flywheel.setVelocity(1387);
         shootTriple();
 
 
         bot.setIntake("off");
+        Flywheel.setVelocity(0);
 
         // ------- CYCLE 2 -------
         bot.setIntake("full");
@@ -76,9 +80,10 @@ public class blueHigh extends LinearOpMode {
         follow(paths.Path5);
 
         bot.setIntake("half");
+        Flywheel.setVelocity(1387);
         shootTriple();
 
-
+        Flywheel.setVelocity(0);
         bot.setIntake("off");
         // ----CYCLE 3---------
         bot.setIntake("full");
@@ -101,13 +106,13 @@ public class blueHigh extends LinearOpMode {
     // ========================
 
     private void shootTriple() throws InterruptedException {
-        Flywheel.setVelocity(1357);
+        Flywheel.setVelocity(1387);
         sleep(1600); // orig: 1600
         for (int i = 0; i < 3; i++) {
             bot.fullDown();
             sleep(160);
             bot.setServoPos(true);
-            sleep(900); // orig: 1200
+            sleep(1200); // orig: 1200
         }
     }
 
