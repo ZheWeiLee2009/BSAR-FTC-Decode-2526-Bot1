@@ -10,6 +10,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -22,6 +23,8 @@ public class UniTeleOp extends OpMode {
     private ElapsedTime opmodeTimer = new ElapsedTime();
     private ElapsedTime gateTimer = new ElapsedTime();
     private double SPEED_MULTIPLIER = c_DriveSpeed;
+
+    private DcMotorEx Flywheel;
 
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry dashboardTelemetry = dashboard.getTelemetry();
@@ -41,6 +44,8 @@ public class UniTeleOp extends OpMode {
         bot = new Drivetrain(hardwareMap, opmodeTimer);
         bot.setServoPos(true);
 //        bot.odo.resetPosAndIMU();
+        Flywheel = hardwareMap.get(DcMotorEx.class,"Flywheel");
+
 
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
     }
@@ -72,24 +77,28 @@ public class UniTeleOp extends OpMode {
 
         double[] powers = bot.calculateMotorPowers(y,x,rx);
         bot.setMotorPowers(powers[0], powers[1], powers[2], powers[3], SPEED_MULTIPLIER);
-
-        // Flywheel
+// Flywheel
         if (gamepad1.dpad_right) {
             bot.setFlywheel("full", flyWheelOffset);
         } else if (gamepad1.dpad_up) {
             bot.setFlywheel("half", flyWheelOffset);
+        } else if (gamepad1.dpad_left) { // lt - 2
+            bot.setFlywheel("full", -0.1);
         } else if (gamepad1.dpad_down) {
-            bot.setFlywheel("less-half", flyWheelOffset);
-        } else if (gamepad1.dpad_left) {
+            Flywheel.setVelocity(1507);
+
+        }
+
+        if(gamepad1.left_trigger > 0.5) {
             bot.setFlywheel("off", 0);
         }
 
         // Flywheel Offsets
-        if (gamepad2.circle) {
-            flyWheelOffset +=1;
-        } else if (gamepad2.square){
-            flyWheelOffset -=1;
-        }
+//        if (gamepad2.circle) {
+//            flyWheelOffset +=1;
+//        } else if (gamepad2.square){
+//            flyWheelOffset -=1;
+//        }
 
         // Intake
         if (gamepad1.circle) {
@@ -98,10 +107,11 @@ public class UniTeleOp extends OpMode {
             bot.setIntake("half");
         } else if (gamepad1.square) {
             bot.setIntake("off");
-        } else if (gamepad1.cross) {
-            bot.setIntake("out");
         }
 
+        if (gamepad1.cross) {
+            bot.setIntake("out");
+        }
 
         // Gate single
         if (gamepad1.leftBumperWasPressed() && gateTimer.milliseconds() >= recoveryPause) {
@@ -156,7 +166,6 @@ public class UniTeleOp extends OpMode {
         }
 
         // Telemetry
-        telemetry.addData("Flywheel-offset:", flyWheelOffset);
         telemetry.addData("Flywheel: ", bot.Flywheel.getPower());
         telemetry.addData("Intake: ", bot.Intake.getPower());
         telemetry.addData("GatePOS: ", bot.Gate.getPosition());
@@ -174,7 +183,6 @@ public class UniTeleOp extends OpMode {
         telemetry.update();
 
 
-
         // FTC Dashboard Telemetry + Graph
         dashboardTelemetry.addData("Flywheel Power: ", bot.Flywheel.getPower());
         dashboardTelemetry.addData("Intake Power: ", bot.Intake.getPower());
@@ -190,8 +198,6 @@ public class UniTeleOp extends OpMode {
         telemetry.addData("\n\n Power: ", SPEED_MULTIPLIER);
 
         dashboardTelemetry.update();
-
     }
-
 
 }

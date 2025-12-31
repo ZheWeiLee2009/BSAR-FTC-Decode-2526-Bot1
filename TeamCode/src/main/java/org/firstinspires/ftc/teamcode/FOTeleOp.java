@@ -155,7 +155,7 @@ public class FOTeleOp extends OpMode {
             bot.setServoPos(GateState);
             if (!isWaitingGateState) {
                 gateTimer.reset();
-                cycleCounter = 1; // Start multi-cycle
+                cycleCounter = 3; // Start multi-cycle
             } else {
                 cycleCounter = 0; // Cancel cycles
             }

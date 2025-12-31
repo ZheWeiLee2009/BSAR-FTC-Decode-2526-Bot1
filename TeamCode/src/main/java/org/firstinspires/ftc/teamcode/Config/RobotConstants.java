@@ -26,7 +26,9 @@ public class RobotConstants {
     public static double c_BR_WeightTuning = 1.0;
 
     public static int recoveryPause = 167; // ms
-    public static int recoveryDelay = 1475; //ms
+    public static int recoveryDelay = 1000; //ms
+
+//    public static int
 
     public static final double initPower = 0.5;
 }
