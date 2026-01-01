@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.Config.RobotConstants.*;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -14,13 +12,19 @@ import org.firstinspires.ftc.teamcode.Config.Drivetrain;
 import org.firstinspires.ftc.teamcode.Config.EthanPaths;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
+import static org.firstinspires.ftc.teamcode.Config.RobotConstants.fullCloseShootingVelocity;
+import static org.firstinspires.ftc.teamcode.Config.RobotConstants.midCloseShootingVelocity;
+import static org.firstinspires.ftc.teamcode.Config.RobotConstants.recoveryDelay;
+
 @Autonomous(name = "BlueHigh", group = "Autonomous")
 public class blueHigh extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
     private EthanPaths paths;
-    private DcMotorEx Flywheel;
+
+    private final int shootingVel1 = fullCloseShootingVelocity;
+    private final int shootingVel2 = midCloseShootingVelocity;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -28,22 +32,26 @@ public class blueHigh extends LinearOpMode {
         bot = new Drivetrain(hardwareMap, new ElapsedTime());
         bot.setServoPos(true);
         bot.setIntake("off");
-        bot.setFlywheel("off", 0);
 
         follower = Constants.createFollower(hardwareMap);
+
+        // Starting position of Robot
         follower.setStartingPose(new Pose(18.155, 121.307, Math.toRadians(143)));
 
         paths = new EthanPaths(follower);
 
-        Flywheel = hardwareMap.get(DcMotorEx.class, "Flywheel");
+        telemetry.addLine("Blue Auto Ready!");
+        telemetry.update();
 
         waitForStart();
         if (isStopRequested()) return;
+
 
         // ============================
         //       AUTON SEQUENCE
         // ============================
 
+        bot.Flywheel.setVelocity(shootingVel2);
 
         bot.setMotorPowers(1, 1, 1, 1, .85);
         follower.setMaxPower(.85);
@@ -53,52 +61,52 @@ public class blueHigh extends LinearOpMode {
 
         // PRELOAD SHOOTING
         bot.setIntake("half");
-        Flywheel.setVelocity(1387);
+        bot.Flywheel.setVelocity(shootingVel2);
         shootTriple();
 
-        bot.setIntake("off");
-        Flywheel.setVelocity(0);
+//        bot.setIntake("off");
+//        bot.Flywheel.setVelocity(0);
 
         // ------- CYCLE 1 -------
+        bot.Flywheel.setVelocity(shootingVel1);
+
         bot.setIntake("full");
         follow(paths.Path2);
-        sleep(100);
+        sleep(10);
         follow(paths.Path3);
-
         bot.setIntake("half");
-        Flywheel.setVelocity(1387);
         shootTriple();
 
 
-        bot.setIntake("off");
-        Flywheel.setVelocity(0);
+//        bot.setIntake("off");
+//        Flywheel.setVelocity(0);
 
         // ------- CYCLE 2 -------
         bot.setIntake("full");
         follow(paths.Path4);
-        sleep(100);
+        sleep(10);
         follow(paths.Path5);
 
-        bot.setIntake("half");
-        Flywheel.setVelocity(1387);
+//        bot.setIntake("half");
+        bot.Flywheel.setVelocity(shootingVel1);
         shootTriple();
 
-        Flywheel.setVelocity(0);
-        bot.setIntake("off");
+//        bot.Flywheel.setVelocity(0);
+//        bot.setIntake("off");
         // ----CYCLE 3---------
         bot.setIntake("full");
         follow(paths.Path6);
-        sleep(100);
+        sleep(10);
         follow(paths.Path7);
 
-        bot.setIntake("half");
+//        bot.setIntake("half");
         shootTriple();
 
         bot.setIntake("off");
+        bot.Flywheel.setVelocity(0);
 
         telemetry.addLine("Auton Complete.");
         telemetry.update();
-        sleep(500);
     }
 
     // ========================
@@ -106,14 +114,17 @@ public class blueHigh extends LinearOpMode {
     // ========================
 
     private void shootTriple() throws InterruptedException {
-        Flywheel.setVelocity(1387);
-        sleep(1600); // orig: 1600
-        for (int i = 0; i < 3; i++) {
-            bot.fullDown();
-            sleep(160);
-            bot.setServoPos(true);
-            sleep(1200); // orig: 1200
-        }
+        bot.Flywheel.setVelocity(shootingVel1);
+//        sleep(1600); // orig: 1600
+        bot.fullDown();
+//        for (int i = 0; i < 3; i++) {
+//
+//            sleep(160);
+//            bot.setServoPos(true);
+//            sleep(1200); // orig: 1200
+//        }
+        sleep(recoveryDelay);
+        bot.setServoPos(true);
     }
 
     private void shootTripleHalf() throws InterruptedException {

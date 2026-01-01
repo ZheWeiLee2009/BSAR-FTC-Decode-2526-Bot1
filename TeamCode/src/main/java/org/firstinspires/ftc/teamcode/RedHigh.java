@@ -12,6 +12,8 @@ import org.firstinspires.ftc.teamcode.Config.Drivetrain;
 import org.firstinspires.ftc.teamcode.Config.RedPaths;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
+import static org.firstinspires.ftc.teamcode.Config.RobotConstants.fullCloseShootingVelocity;
+import static org.firstinspires.ftc.teamcode.Config.RobotConstants.midCloseShootingVelocity;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.recoveryDelay;
 
 @Autonomous(name = "RedHigh", group = "Autonomous")
@@ -20,10 +22,9 @@ public class RedHigh extends LinearOpMode {
     private Drivetrain bot;
     private Follower follower;
     private RedPaths paths;
-    private DcMotorEx Flywheel;
 
-    private final int shootingVelocity = 1480;
-    private final int shootingV2 = 1330;
+    private final int shootingVel1 = fullCloseShootingVelocity;
+    private final int shootingVel2 = midCloseShootingVelocity;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -41,7 +42,7 @@ public class RedHigh extends LinearOpMode {
 
         telemetry.addLine("Red Auto Ready!");
         telemetry.update();
-        Flywheel = hardwareMap.get(DcMotorEx.class, "Flywheel");
+
         waitForStart();
         if (isStopRequested()) return;
 
@@ -50,25 +51,24 @@ public class RedHigh extends LinearOpMode {
         //       AUTON SEQUENCE
         // ============================
 
-        Flywheel.setVelocity(shootingV2);
+        bot.Flywheel.setVelocity(shootingVel2);
 
         bot.setMotorPowers(1, 1, 1, 1, .85);
         follower.setMaxPower(.85);
         bot.setIntake("full");
-        Flywheel.setVelocity(shootingV2);
 
         follow(paths.Path1);
 
         // PRELOAD SHOOTING
         bot.setIntake("half");
-        Flywheel.setVelocity(shootingV2);
+        bot.Flywheel.setVelocity(shootingVel2);
         shootTriple();
 
         //bot.setIntake("off");=
         //Flywheel.setVelocity(0);
 
         // ------- CYCLE 1 -------
-        Flywheel.setVelocity(shootingVelocity);
+        bot.Flywheel.setVelocity(shootingVel1);
 
         bot.setIntake("full");
         follow(paths.Path2);
@@ -88,7 +88,7 @@ public class RedHigh extends LinearOpMode {
         follow(paths.Path5);
 
         //bot.setIntake("half");=
-        Flywheel.setVelocity(shootingVelocity);
+        bot.Flywheel.setVelocity(shootingVel1);
         shootTriple();
 
         //Flywheel.setVelocity(0);
@@ -102,11 +102,11 @@ public class RedHigh extends LinearOpMode {
         //bot.setIntake("half");=
         shootTriple();
 
-       // bot.setIntake("off");=
+        bot.setIntake("off");
+        bot.Flywheel.setVelocity(0);
 
         telemetry.addLine("Auton Complete.");
         telemetry.update();
-//        sleep(500);
     }
 
     // ========================
@@ -114,7 +114,7 @@ public class RedHigh extends LinearOpMode {
     // ========================
 
     private void shootTriple() throws InterruptedException {
-        Flywheel.setVelocity(shootingVelocity);
+        bot.Flywheel.setVelocity(shootingVel1);
 //        sleep(1600); // orig: 1600
         bot.fullDown();
 //        for (int i = 0; i < 3; i++) {

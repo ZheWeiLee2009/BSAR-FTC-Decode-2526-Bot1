@@ -28,7 +28,10 @@ public class RobotConstants {
     public static int recoveryPause = 167; // ms
     public static int recoveryDelay = 1000; //ms
 
-//    public static int
+    public static int midCloseShootingVelocity = 1330; //
+    public static int fullCloseShootingVelocity = 1480;
+
+    public static int fullFarShootingVelocity = 1800;
 
     public static final double initPower = 0.5;
 }
