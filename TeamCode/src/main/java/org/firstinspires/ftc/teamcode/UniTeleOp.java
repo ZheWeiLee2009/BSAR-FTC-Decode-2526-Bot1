@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.c_DriveSpeed;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.recoveryDelay;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.recoveryPause;
+import static org.firstinspires.ftc.teamcode.Config.RobotConstants.userCloseShootingVelocity;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -76,8 +77,9 @@ public class UniTeleOp extends OpMode {
         double rx = gamepad1.right_stick_x;
 
         double[] powers = bot.calculateMotorPowers(y,x,rx);
-        bot.setMotorPowers(powers[0], powers[1], powers[2], powers[3], SPEED_MULTIPLIER);
-// Flywheel
+        bot.setMotorPowers(powers[0], powers[1], powers[2], powers[3], SPEED_MULTIPLIER);        // Flywheel
+
+        // Flywheel
         if (gamepad1.dpad_right) {
             bot.setFlywheel("full", flyWheelOffset);
         } else if (gamepad1.dpad_up) {
@@ -85,7 +87,7 @@ public class UniTeleOp extends OpMode {
         } else if (gamepad1.dpad_left) { // lt - 2
             bot.setFlywheel("full", -0.1);
         } else if (gamepad1.dpad_down) {
-            Flywheel.setVelocity(1507);
+            Flywheel.setVelocity(userCloseShootingVelocity);
 
         }
 

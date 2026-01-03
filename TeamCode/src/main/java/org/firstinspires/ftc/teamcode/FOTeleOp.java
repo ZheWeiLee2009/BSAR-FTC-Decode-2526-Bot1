@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.c_DriveSpeed;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.recoveryDelay;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.recoveryPause;
+import static org.firstinspires.ftc.teamcode.Config.RobotConstants.userCloseShootingVelocity;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -42,7 +43,7 @@ public class FOTeleOp extends OpMode {
     private boolean GateState = true;
     private boolean isWaitingGateState = false;
 
-    private int MAX_CYCLES = 3;
+    private final int MAX_CYCLES = 3;
     private int cycleCounter = 0;
     private int flyWheelOffset = 0;
 
@@ -109,7 +110,7 @@ public class FOTeleOp extends OpMode {
         } else if (gamepad1.dpad_left) { // lt - 2
             bot.setFlywheel("full", -0.1);
         } else if (gamepad1.dpad_down) {
-            Flywheel.setVelocity(1507);
+            Flywheel.setVelocity(userCloseShootingVelocity);
 
         }
 

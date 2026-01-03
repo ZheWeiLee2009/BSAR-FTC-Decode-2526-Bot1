@@ -26,12 +26,16 @@ public class RobotConstants {
     public static double c_BR_WeightTuning = 1.0;
 
     public static int recoveryPause = 167; // ms
-    public static int recoveryDelay = 1000; //ms
+    public static int recoveryDelay = 1000; // ms
 
+
+    // Auto
     public static int midCloseShootingVelocity = 1330; //
     public static int fullCloseShootingVelocity = 1480;
 
-    public static int fullFarShootingVelocity = 1800;
+    // User
+    public static int userCloseShootingVelocity = 1507;
+    public static int userFarShootingVelocity = 2000;
 
     public static final double initPower = 0.5;
 }
