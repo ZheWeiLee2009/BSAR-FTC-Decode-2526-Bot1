@@ -61,7 +61,7 @@ public class blueHigh extends LinearOpMode {
 
         // PRELOAD SHOOTING
         bot.setIntake("half");
-        bot.Flywheel.setVelocity(shootingVel2);
+        bot.Flywheel.setVelocity(shootingVel1);
         shootTriple();
 
 //        bot.setIntake("off");
@@ -71,8 +71,12 @@ public class blueHigh extends LinearOpMode {
         bot.Flywheel.setVelocity(shootingVel1);
 
         bot.setIntake("full");
+        bot.setMotorPowers(1, 1, 1, 1, .70);
+        follower.setMaxPower(.70);
         follow(paths.Path2);
         sleep(10);
+        bot.setMotorPowers(1, 1, 1, 1, .85);
+        follower.setMaxPower(.85);
         follow(paths.Path3);
         bot.setIntake("half");
         shootTriple();
@@ -83,7 +87,11 @@ public class blueHigh extends LinearOpMode {
 
         // ------- CYCLE 2 -------
         bot.setIntake("full");
+        bot.setMotorPowers(1, 1, 1, 1, .8);
+        follower.setMaxPower(.8);
         follow(paths.Path4);
+        bot.setMotorPowers(1, 1, 1, 1, .85);
+        follower.setMaxPower(.85);
         sleep(10);
         follow(paths.Path5);
 
@@ -95,7 +103,11 @@ public class blueHigh extends LinearOpMode {
 //        bot.setIntake("off");
         // ----CYCLE 3---------
         bot.setIntake("full");
+        bot.setMotorPowers(1, 1, 1, 1, .6);
+        follower.setMaxPower(.6);
         follow(paths.Path6);
+        bot.setMotorPowers(1, 1, 1, 1, .85);
+        follower.setMaxPower(.85);
         sleep(10);
         follow(paths.Path7);
 
@@ -114,7 +126,7 @@ public class blueHigh extends LinearOpMode {
     // ========================
 
     private void shootTriple() throws InterruptedException {
-        bot.Flywheel.setVelocity(shootingVel1);
+        bot.Flywheel.setVelocity(shootingVel1-17);
 //        sleep(1600); // orig: 1600
         bot.fullDown();
 //        for (int i = 0; i < 3; i++) {
@@ -123,7 +135,7 @@ public class blueHigh extends LinearOpMode {
 //            bot.setServoPos(true);
 //            sleep(1200); // orig: 1200
 //        }
-        sleep(recoveryDelay);
+        sleep(recoveryDelay + 300);
         bot.setServoPos(true);
     }
 

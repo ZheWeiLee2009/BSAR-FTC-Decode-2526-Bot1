@@ -78,8 +78,8 @@ public class RedPaths {
         Path6 = follower.pathBuilder()
                 .addPath(new BezierCurve(
                         new Pose(90.774, 89.948),
-                        new Pose(48.237, 24.220),
-                        new Pose(128.549, 35.846)
+                        new Pose(59.444, 5.086),
+                        new Pose(128.424, 30.993)
                 ))
                 // Robot drives backward while facing 180°
                 .setLinearHeadingInterpolation(
@@ -91,7 +91,7 @@ public class RedPaths {
         // ------------------ Path 7 ------------------
         Path7 = follower.pathBuilder()
                 .addPath(new BezierCurve(
-                        new Pose(128.549, 35.846),
+                        new Pose(128.424, 30.993),
                         new Pose(58.178, 56.115),
                         new Pose(90.774, 89.742)
                 ))
