@@ -102,8 +102,8 @@ public class blueHigh extends LinearOpMode {
 //        bot.setIntake("off");
         // ----CYCLE 3---------
         bot.setIntake("full");
-        bot.setMotorPowers(1, 1, 1, 1, .6);
-        follower.setMaxPower(.6);
+        bot.setMotorPowers(1, 1, 1, 1, .7);
+        follower.setMaxPower(.7);
         follow(paths.Path6);
         bot.setMotorPowers(1, 1, 1, 1, .85);
         follower.setMaxPower(.85);
@@ -115,6 +115,8 @@ public class blueHigh extends LinearOpMode {
 
         bot.setIntake("off");
         bot.Flywheel.setVelocity(0);
+        follower.setMaxPower(1.0);
+        follow(paths.Path8);
 
         telemetry.addLine("Auton Complete.");
         telemetry.update();

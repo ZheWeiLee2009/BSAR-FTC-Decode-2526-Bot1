@@ -15,6 +15,7 @@ public class bluePaths {
     public PathChain Path5;
     public PathChain Path6;
     public PathChain Path7;
+    public PathChain Path8;
 
     public bluePaths(Follower follower) {
 
@@ -38,7 +39,7 @@ public class bluePaths {
                         new BezierCurve(
                                 new Pose(53.020, 89.948),
                                 new Pose(81.060, 73.748),
-                                new Pose(18.866, 83.760)
+                                new Pose(13.866, 83.760)
                         )
                 )
                 .setLinearHeadingInterpolation(
@@ -51,7 +52,7 @@ public class bluePaths {
                 .pathBuilder()
                 .addPath(
                         new BezierCurve(
-                                new Pose(18.866, 83.760),
+                                new Pose(13.866, 83.760),
                                 new Pose(85.616, 63.748),
                                 new Pose(53.433, 89.948)
                         )
@@ -68,7 +69,7 @@ public class bluePaths {
                         new BezierCurve(
                                 new Pose(53.433, 89.948),
                                 new Pose(69.775, 58.490),
-                                new Pose(19.393, 59.209)
+                                new Pose(12.393, 59.209)
                         )
                 )
                 .setTangentHeadingInterpolation()
@@ -78,8 +79,8 @@ public class bluePaths {
                 .pathBuilder()
                 .addPath(
                         new BezierCurve(
-                                new Pose(19.393, 59.209),
-                                new Pose(77.404, 66.437),
+                                new Pose(12.393, 59.209),
+                                new Pose(70.404, 73.37),
                                 new Pose(53.226, 89.948)
                         )
                 )
@@ -92,7 +93,7 @@ public class bluePaths {
                         new BezierCurve(
                                 new Pose(53.226, 89.948),
                                 new Pose(89.468, 14.156),
-                                new Pose(15.451, 35.846)
+                                new Pose(10.451, 35.846)
                         )
                 )
                 .setLinearHeadingInterpolation(
@@ -105,14 +106,28 @@ public class bluePaths {
                 .pathBuilder()
                 .addPath(
                         new BezierCurve(
-                                new Pose(15.451, 35.846),
-                                new Pose(85.822, 56.115),
-                                new Pose(53.226, 89.742)
+                                new Pose(10.451, 35.846),
+                                new Pose(94.765, 62.764),
+                                new Pose(58.500, 92.035)
                         )
                 )
                 .setLinearHeadingInterpolation(
                         Math.toRadians(180),
                         Math.toRadians(134)//Math.toRadians(140)
+                )
+                .build();
+
+        Path8 = follower
+                .pathBuilder()
+                .addPath(
+                        new BezierLine(
+                                new Pose(58.500, 92.035),
+                                new Pose(40.076, 57.726)
+                        )
+                )
+                .setLinearHeadingInterpolation(
+                        Math.toRadians(143),
+                        Math.toRadians(134)
                 )
                 .build();
     }
