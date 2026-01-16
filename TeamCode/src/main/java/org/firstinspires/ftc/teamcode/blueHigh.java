@@ -2,14 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
-import org.firstinspires.ftc.teamcode.Config.EthanPaths;
+import org.firstinspires.ftc.teamcode.pedroPaths.bluePaths;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.fullCloseShootingVelocity;
@@ -21,7 +20,7 @@ public class blueHigh extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
-    private EthanPaths paths;
+    private bluePaths paths;
 
     private final int shootingVel1 = fullCloseShootingVelocity;
     private final int shootingVel2 = midCloseShootingVelocity;
@@ -38,7 +37,7 @@ public class blueHigh extends LinearOpMode {
         // Starting position of Robot
         follower.setStartingPose(new Pose(18.155, 121.307, Math.toRadians(143)));
 
-        paths = new EthanPaths(follower);
+        paths = new bluePaths(follower);
 
         telemetry.addLine("Blue Auto Ready!");
         telemetry.update();
@@ -135,7 +134,7 @@ public class blueHigh extends LinearOpMode {
 //            bot.setServoPos(true);
 //            sleep(1200); // orig: 1200
 //        }
-        sleep(recoveryDelay + 300);
+        sleep(recoveryDelay + 150);
         bot.setServoPos(true);
     }
 

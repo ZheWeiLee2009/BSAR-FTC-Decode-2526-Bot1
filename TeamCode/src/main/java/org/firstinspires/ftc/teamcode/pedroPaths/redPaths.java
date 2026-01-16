@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Config;
+package org.firstinspires.ftc.teamcode.pedroPaths;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierCurve;
@@ -6,7 +6,7 @@ import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 
-public class RedPaths {
+public class redPaths {
 
     public PathChain Path1;
     public PathChain Path2;
@@ -16,14 +16,17 @@ public class RedPaths {
     public PathChain Path6;
     public PathChain Path7;
 
-    public RedPaths(Follower follower) {
+    public redPaths(Follower follower) {
 
         // ------------------ Path 1 ------------------
 
         Path1 = follower.pathBuilder()
-                .addPath(
-                        new BezierLine(new Pose(125.845, 121.307), new Pose(90.980, 89.948))                )
-                .setLinearHeadingInterpolation(Math.toRadians(37), Math.toRadians(46))
+                .addPath(new BezierLine(
+                        new Pose(125.845, 121.307),
+                        new Pose(90.980, 89.948))                )
+                .setLinearHeadingInterpolation(
+                        Math.toRadians(37),
+                        Math.toRadians(46))
                 .build();
 
         // ------------------ Path 2 ------------------
@@ -78,8 +81,8 @@ public class RedPaths {
         Path6 = follower.pathBuilder()
                 .addPath(new BezierCurve(
                         new Pose(90.774, 89.948),
-                        new Pose(59.444, 5.086),
-                        new Pose(128.424, 30.993)
+                        new Pose(48.237, 24.220),
+                        new Pose(128.549, 35.846)
                 ))
                 // Robot drives backward while facing 180°
                 .setLinearHeadingInterpolation(
@@ -91,7 +94,7 @@ public class RedPaths {
         // ------------------ Path 7 ------------------
         Path7 = follower.pathBuilder()
                 .addPath(new BezierCurve(
-                        new Pose(128.424, 30.993),
+                        new Pose(128.549, 35.846),
                         new Pose(58.178, 56.115),
                         new Pose(90.774, 89.742)
                 ))

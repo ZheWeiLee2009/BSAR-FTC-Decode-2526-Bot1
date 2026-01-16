@@ -2,14 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
-import org.firstinspires.ftc.teamcode.Config.RedPaths;
+import org.firstinspires.ftc.teamcode.pedroPaths.redPaths;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.fullCloseShootingVelocity;
@@ -21,7 +20,7 @@ public class RedHigh extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
-    private RedPaths paths;
+    private redPaths paths;
 
     private final int shootingVel1 = fullCloseShootingVelocity;
     private final int shootingVel2 = midCloseShootingVelocity;
@@ -38,7 +37,7 @@ public class RedHigh extends LinearOpMode {
         // Mirrored start of (24,129,143°) → (-24,129,37°)
         follower.setStartingPose(new Pose(125.84527220630372, 121.30659025787965, Math.toRadians(37)));
 
-        paths = new RedPaths(follower);
+        paths = new redPaths(follower);
 
         telemetry.addLine("Red Auto Ready!");
         telemetry.update();

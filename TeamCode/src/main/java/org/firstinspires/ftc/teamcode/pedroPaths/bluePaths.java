@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Config;
+package org.firstinspires.ftc.teamcode.pedroPaths;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierCurve;
@@ -6,7 +6,7 @@ import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 
-public class EthanPaths {
+public class bluePaths {
 
     public PathChain Path1;
     public PathChain Path2;
@@ -16,14 +16,13 @@ public class EthanPaths {
     public PathChain Path6;
     public PathChain Path7;
 
-    public EthanPaths(Follower follower) {
+    public bluePaths(Follower follower) {
 
         Path1 = follower
                 .pathBuilder()
                 .addPath(
                         new BezierLine(
                                 new Pose(18.155, 121.307),
-
                                 new Pose(53.020, 89.948)
                         )
                 )

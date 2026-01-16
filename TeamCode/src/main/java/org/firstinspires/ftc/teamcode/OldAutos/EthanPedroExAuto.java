@@ -8,7 +8,7 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 
 import org.firstinspires.ftc.teamcode.Config.Drivetrain; // Robo Config
-import org.firstinspires.ftc.teamcode.Config.EthanPaths;
+import org.firstinspires.ftc.teamcode.pedroPaths.bluePaths;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 @Disabled
 @Autonomous(name = "EthanEXPedroMulti", group = "Autonomous")
@@ -16,7 +16,7 @@ public class EthanPedroExAuto extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
-    private EthanPaths paths;
+    private bluePaths paths;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -30,7 +30,7 @@ public class EthanPedroExAuto extends LinearOpMode {
         // --- Pedro follower + paths ---
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(new Pose(24, 129.77, Math.toRadians(143)));
-        paths = new EthanPaths(follower);
+        paths = new bluePaths(follower);
 
         telemetry.addLine("Ethan Pedro Pathing Ready!");
         telemetry.addLine("Ethan Pedro Pathing Ready!");

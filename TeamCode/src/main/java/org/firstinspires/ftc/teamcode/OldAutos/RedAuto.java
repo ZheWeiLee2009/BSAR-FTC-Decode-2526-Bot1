@@ -8,7 +8,7 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
-import org.firstinspires.ftc.teamcode.Config.RedPaths;
+import org.firstinspires.ftc.teamcode.pedroPaths.redPaths;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 @Disabled
 @Autonomous(name = "RedAuto", group = "Autonomous")
@@ -16,7 +16,7 @@ public class RedAuto extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
-    private RedPaths paths;
+    private redPaths paths;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -31,7 +31,7 @@ public class RedAuto extends LinearOpMode {
         follower = Constants.createFollower(hardwareMap);
         // mirrored start pose: x -> -x, heading -> π - 143° = 37°
         follower.setStartingPose(new Pose(-24, 129.77, Math.toRadians(37)));
-        paths = new RedPaths(follower);
+        paths = new redPaths(follower);
 
         telemetry.addLine("Red Pedro Pathing Ready!");
         telemetry.update();

@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
-import org.firstinspires.ftc.teamcode.Config.EthanPaths;
+import org.firstinspires.ftc.teamcode.pedroPaths.bluePaths;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 @Disabled
@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 public class TestAuto extends LinearOpMode {
     private Drivetrain bot;
     private Follower follower;
-    private EthanPaths paths;
+    private bluePaths paths;
     private DcMotorEx Flywheel;
     int doer = 0;
 
@@ -32,7 +32,7 @@ public class TestAuto extends LinearOpMode {
         follower = Constants.createFollower(hardwareMap);
         follower.setStartingPose(new Pose(18.155, 121.307, Math.toRadians(143)));
 
-        paths = new EthanPaths(follower);
+        paths = new bluePaths(follower);
 
         Flywheel = hardwareMap.get(DcMotorEx.class, "Flywheel");
 
