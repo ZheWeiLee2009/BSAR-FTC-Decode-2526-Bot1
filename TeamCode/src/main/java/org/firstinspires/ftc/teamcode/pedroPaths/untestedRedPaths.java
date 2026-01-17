@@ -82,7 +82,7 @@ public class untestedRedPaths {
                         new BezierLine(
                                 new Pose(90.774, 89.948),
 
-                                new Pose(100.782, 34.924)
+                                new Pose(100.782, 36.000)
                         )
                 ).setLinearHeadingInterpolation(Math.toRadians(46.000), Math.toRadians(0.000))
                 .setTimeoutConstraint(100)
@@ -90,9 +90,9 @@ public class untestedRedPaths {
 
         entry3 = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(100.782, 34.924),
+                                new Pose(100.782, 36.000),
 
-                                new Pose(133.730, 34.924)
+                                new Pose(133.730, 36.000)
                         )
                 ).setTangentHeadingInterpolation()
 
@@ -100,17 +100,17 @@ public class untestedRedPaths {
 
         exit3 = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(133.730, 34.924),
+                                new Pose(133.730, 36.000),
 
-                                new Pose(85.500, 92.035)
+                                new Pose(90.774, 89.948)
                         )
                 ).setLinearHeadingInterpolation(Math.toRadians(0.000), Math.toRadians(46.000))
-                .setTimeoutConstraint(50)
+
                 .build();
 
         leave = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(85.500, 92.035),
+                                new Pose(90.774, 89.948),
 
                                 new Pose(103.623, 63.111)
                         )

@@ -31,7 +31,7 @@ public class RobotConstants {
 
     // Auto
     public static int midCloseShootingVelocity = 1330; //
-    public static int fullCloseShootingVelocity = 1480;
+    public static int fullCloseShootingVelocity = 1500;
 
     // User
     public static int userCloseShootingVelocity = 1507;
