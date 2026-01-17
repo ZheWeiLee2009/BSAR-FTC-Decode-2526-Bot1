@@ -6,7 +6,7 @@ It updates Pose X values, heading angles, and ensures the class
 and constructor names match the output file name.
 
 Usage (under the same path):
-    python mirror_paths.py <input_file> [-o <output_file>]
+    python poseMirror.py <input_file> [-o <output_file>]
 
 Parameters:
     input_file       Path to the input Java file to be mirrored.
