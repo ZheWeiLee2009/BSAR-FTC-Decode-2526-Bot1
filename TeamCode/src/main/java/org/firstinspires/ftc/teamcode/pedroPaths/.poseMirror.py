@@ -20,6 +20,7 @@ Behavior:
     - Updates the public class name to match the output file name
     - Updates the constructor name to match the output file name
     - Ensures no accidental overwrites; will fail if output file exists
+    - Prevent lost timings, stop behaviors, deceleration, etc..
 
 Example:
     python mirror_paths.py untestedRedPaths.java
