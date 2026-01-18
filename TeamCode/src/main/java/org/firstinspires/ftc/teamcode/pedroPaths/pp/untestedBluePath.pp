@@ -129,7 +129,7 @@
       "name": "align3",
       "endPoint": {
         "x": 43.218,
-        "y": 34.92392502756341,
+        "y": 36,
         "heading": "linear",
         "reverse": false,
         "endDeg": 180,
@@ -147,7 +147,7 @@
       "name": "entry3",
       "endPoint": {
         "x": 10.270121278941565,
-        "y": 34.92392502756341,
+        "y": 36,
         "heading": "tangential",
         "reverse": false
       },
@@ -162,8 +162,8 @@
       "id": "mkhmbrm6-ln5z1i",
       "name": "exit3",
       "endPoint": {
-        "x": 58.5,
-        "y": 92.035,
+        "x": 53.226,
+        "y": 89.948,
         "heading": "linear",
         "reverse": false,
         "startDeg": 180,
@@ -296,5 +296,5 @@
     }
   ],
   "version": "1.2.1",
-  "timestamp": "2026-01-17T02:56:08.237Z"
+  "timestamp": "2026-01-18T05:49:43.265Z"
 }
