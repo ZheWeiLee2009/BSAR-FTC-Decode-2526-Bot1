@@ -6,14 +6,14 @@ import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 
-public class untestedBlueFarPaths {
+public class optimalBlueFarPaths {
     public PathChain preload;
     public PathChain align3;
     public PathChain entry3;
     public PathChain exit3;
     public PathChain leave;
 
-    public untestedBlueFarPaths(Follower follower) {
+    public optimalBlueFarPaths(Follower follower) {
         preload = follower.pathBuilder().addPath(
                         new BezierLine(
                                 new Pose(56.000, 8.000),
