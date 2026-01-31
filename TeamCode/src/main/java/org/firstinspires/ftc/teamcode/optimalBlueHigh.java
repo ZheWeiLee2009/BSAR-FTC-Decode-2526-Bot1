@@ -1,27 +1,28 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.Config.RobotConstants.fullCloseShootingVelocity;
-import static org.firstinspires.ftc.teamcode.Config.RobotConstants.midCloseShootingVelocity;
-import static org.firstinspires.ftc.teamcode.Config.RobotConstants.recoveryDelay;
-
-import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.Pose;
+
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.pedroPaths.untestedRedFarPaths;
+import org.firstinspires.ftc.teamcode.pedroPaths.optimalBluePaths;
 
-@Autonomous(name = "untestedRedFarHigh", group = "untested")
-public class untestedRedFarHigh extends LinearOpMode {
+import static org.firstinspires.ftc.teamcode.Config.RobotConstants.fullCloseShootingVelocity;
+import static org.firstinspires.ftc.teamcode.Config.RobotConstants.midCloseShootingVelocity;
+import static org.firstinspires.ftc.teamcode.Config.RobotConstants.recoveryDelay;
+
+@Autonomous(name = "optimalBlueHigh", group = "untested")
+public class optimalBlueHigh extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
 
-    private final int standardShootingVel = fullCloseShootingVelocity + 12;
-    private final int closerShootingVel = midCloseShootingVelocity + 12;
+    private final int standardShootingVel = fullCloseShootingVelocity;
+    private final int closerShootingVel = midCloseShootingVelocity;
 
 
     public void runOpMode() throws InterruptedException{
@@ -34,10 +35,10 @@ public class untestedRedFarHigh extends LinearOpMode {
         follower = Constants.createFollower(hardwareMap);
 
         // Starting position of Robot
-        follower.setStartingPose(new Pose(88.000, 8.000, Math.toRadians(90)));
+        follower.setStartingPose(new Pose(18.155, 121.307, Math.toRadians(143)));
 
-        untestedRedFarPaths paths;
-        paths = new untestedRedFarPaths(follower);
+        optimalBluePaths paths;
+        paths = new optimalBluePaths(follower);
 
         telemetry.addLine("Blue Auto Ready!");
         telemetry.update();
@@ -46,7 +47,7 @@ public class untestedRedFarHigh extends LinearOpMode {
         if (isStopRequested()) return;
 
         // Start
-        bot.Flywheel.setVelocity(standardShootingVel);
+        bot.Flywheel.setVelocity(closerShootingVel);
         follower.setMaxPower(.85);
         bot.setIntake("full");
 
@@ -56,6 +57,21 @@ public class untestedRedFarHigh extends LinearOpMode {
         triRelease();
 
         // Cycle 2
+        follower.setMaxPower(.80);
+        follow(paths.entry1);
+        follower.setMaxPower(.85);
+        follow(paths.exit1);
+        triRelease();
+
+        // Cycle 3
+        follower.setMaxPower(.80);
+        follow(paths.align2);
+        follow(paths.entry2);
+        follower.setMaxPower(.85);
+        follow(paths.exit2);
+        triRelease();
+
+        // Cycle 4
         follower.setMaxPower(.80);
         follow(paths.align3);
         follow(paths.entry3);
@@ -71,7 +87,6 @@ public class untestedRedFarHigh extends LinearOpMode {
         follow(paths.leave);
         telemetry.addLine("Auto Complete.");
         telemetry.update();
-
     }
 
     // methods

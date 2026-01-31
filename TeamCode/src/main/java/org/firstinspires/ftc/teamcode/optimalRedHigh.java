@@ -12,10 +12,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.pedroPaths.untestedBlueFarPaths;
+import org.firstinspires.ftc.teamcode.pedroPaths.optimalRedPaths;
 
-@Autonomous(name = "untestedBlueFarHigh", group = "untested")
-public class untestedBlueFarHigh extends LinearOpMode {
+@Autonomous(name = "optimalRedHigh", group = "untested")
+public class optimalRedHigh extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
@@ -34,19 +34,19 @@ public class untestedBlueFarHigh extends LinearOpMode {
         follower = Constants.createFollower(hardwareMap);
 
         // Starting position of Robot
-        follower.setStartingPose(new Pose(56.000, 8.000, Math.toRadians(90)));
+        follower.setStartingPose(new Pose(125.845, 121.307, Math.toRadians(37)));
 
-        untestedBlueFarPaths paths;
-        paths = new untestedBlueFarPaths(follower);
+        optimalRedPaths paths;
+        paths = new optimalRedPaths(follower);
 
-        telemetry.addLine("Blue Auto Ready!");
+        telemetry.addLine("Red Auto Ready!");
         telemetry.update();
 
         waitForStart();
         if (isStopRequested()) return;
 
         // Start
-        bot.Flywheel.setVelocity(standardShootingVel);
+        bot.Flywheel.setVelocity(closerShootingVel);
         follower.setMaxPower(.85);
         bot.setIntake("full");
 
@@ -56,6 +56,21 @@ public class untestedBlueFarHigh extends LinearOpMode {
         triRelease();
 
         // Cycle 2
+        follower.setMaxPower(.80);
+        follow(paths.entry1);
+        follower.setMaxPower(.85);
+        follow(paths.exit1);
+        triRelease();
+
+        // Cycle 3
+        follower.setMaxPower(.80);
+        follow(paths.align2);
+        follow(paths.entry2);
+        follower.setMaxPower(.85);
+        follow(paths.exit2);
+        triRelease();
+
+        // Cycle 4
         follower.setMaxPower(.80);
         follow(paths.align3);
         follow(paths.entry3);
@@ -71,7 +86,6 @@ public class untestedBlueFarHigh extends LinearOpMode {
         follow(paths.leave);
         telemetry.addLine("Auto Complete.");
         telemetry.update();
-
     }
 
     // methods

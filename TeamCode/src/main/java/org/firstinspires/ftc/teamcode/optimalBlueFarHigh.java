@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.fullCloseShootingVelocity;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.midCloseShootingVelocity;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.recoveryDelay;
-import static org.firstinspires.ftc.teamcode.Config.RobotConstants.recoveryPause;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
@@ -13,10 +12,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.pedroPaths.untestedRedPaths;
+import org.firstinspires.ftc.teamcode.pedroPaths.optimalBlueFarPaths;
 
-@Autonomous(name = "untestedRedHigh", group = "untested")
-public class untestedRedHigh extends LinearOpMode {
+@Autonomous(name = "optimalBlueFarHigh", group = "untested")
+public class optimalBlueFarHigh extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
@@ -35,19 +34,19 @@ public class untestedRedHigh extends LinearOpMode {
         follower = Constants.createFollower(hardwareMap);
 
         // Starting position of Robot
-        follower.setStartingPose(new Pose(125.845, 121.307, Math.toRadians(37)));
+        follower.setStartingPose(new Pose(56.000, 8.000, Math.toRadians(90)));
 
-        untestedRedPaths paths;
-        paths = new untestedRedPaths(follower);
+        optimalBlueFarPaths paths;
+        paths = new optimalBlueFarPaths(follower);
 
-        telemetry.addLine("Red Auto Ready!");
+        telemetry.addLine("Blue Auto Ready!");
         telemetry.update();
 
         waitForStart();
         if (isStopRequested()) return;
 
         // Start
-        bot.Flywheel.setVelocity(closerShootingVel);
+        bot.Flywheel.setVelocity(standardShootingVel);
         follower.setMaxPower(.85);
         bot.setIntake("full");
 
@@ -57,21 +56,6 @@ public class untestedRedHigh extends LinearOpMode {
         triRelease();
 
         // Cycle 2
-        follower.setMaxPower(.80);
-        follow(paths.entry1);
-        follower.setMaxPower(.85);
-        follow(paths.exit1);
-        triRelease();
-
-        // Cycle 3
-        follower.setMaxPower(.80);
-        follow(paths.align2);
-        follow(paths.entry2);
-        follower.setMaxPower(.85);
-        follow(paths.exit2);
-        triRelease();
-
-        // Cycle 4
         follower.setMaxPower(.80);
         follow(paths.align3);
         follow(paths.entry3);
@@ -87,6 +71,7 @@ public class untestedRedHigh extends LinearOpMode {
         follow(paths.leave);
         telemetry.addLine("Auto Complete.");
         telemetry.update();
+
     }
 
     // methods
