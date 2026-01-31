@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.Config.Drivetrain;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.teamcode.pedroPaths.optimalRedFarPaths;
 
-@Autonomous(name = "optimalRedFarHigh", group = "untested")
+@Autonomous(name = "optimalRedFarHigh", group = ".")
 public class optimalRedFarHigh extends LinearOpMode {
 
     private Drivetrain bot;

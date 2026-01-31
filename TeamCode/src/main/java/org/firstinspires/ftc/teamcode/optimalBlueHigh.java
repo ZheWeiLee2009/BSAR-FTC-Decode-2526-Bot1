@@ -15,7 +15,7 @@ import static org.firstinspires.ftc.teamcode.Config.RobotConstants.fullCloseShoo
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.midCloseShootingVelocity;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.recoveryDelay;
 
-@Autonomous(name = "optimalBlueHigh", group = "untested")
+@Autonomous(name = "optimalBlueHigh", group = ".")
 public class optimalBlueHigh extends LinearOpMode {
 
     private Drivetrain bot;
