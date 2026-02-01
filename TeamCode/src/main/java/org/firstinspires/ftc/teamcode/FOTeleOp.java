@@ -40,11 +40,23 @@ public class FOTeleOp extends OpMode {
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry dashboardTelemetry = dashboard.getTelemetry();
 
+    // Actual gate servo command
+    // true  = gate OPEN
+    // false = gate CLOSED
     private boolean GateState = true;
+    // State machine flag
+    // true  = gate is CLOSED and waiting to OPEN
+    // false = gate is OPEN and waiting to CLOSE
     private boolean isWaitingGateState = false;
 
+
+    // Maximum number of objects to release in multi-cycle mode
     private final int MAX_CYCLES = 3;
+    // Counts how many OPEN events (objects released) have occurred
+    // 0 = idle, >0 = multi-cycle active
     private int cycleCounter = 0;
+    
+    
     private int flyWheelOffset = 0;
 
 
@@ -138,54 +150,93 @@ public class FOTeleOp extends OpMode {
             bot.setIntake("out");
         }
 
-        // Gate single
+    // =====================
+    // SINGLE-CYCLE GATE CONTROL
+    // Opens or closes the gate once
+    // =====================
         if (gamepad1.leftBumperWasPressed() && gateTimer.milliseconds() >= recoveryPause) {
+            // Toggle gate based on current waiting state
             GateState = isWaitingGateState;
             bot.setServoPos(GateState);
+
             if (!isWaitingGateState) {
+                // Gate just OPENED → start timer so it can auto-close
                 gateTimer.reset();
             } else {
+                // Gate just CLOSED → ensure multi-cycle is not running
                 cycleCounter =0;
             }
+
+            // Flip state machine to expect the opposite transition next
             isWaitingGateState = !isWaitingGateState;
         }
 
-        // Gate multi
+        // =====================
+        // MULTI-CYCLE GATE CONTROL
+        // Automatically releases multiple objects
+        // =====================
         if (gamepad1.rightBumperWasPressed() && gateTimer.milliseconds() >= recoveryPause){
+            
+            // Initial toggle to start the sequence
             GateState = isWaitingGateState;
             bot.setServoPos(GateState);
             if (!isWaitingGateState) {
+                
+                // Gate OPENED → start multi-cycle feeder
                 gateTimer.reset();
-                cycleCounter = 3; // Start multi-cycle
+                cycleCounter = 3; // enable automated cycling
             } else {
-                cycleCounter = 0; // Cancel cycles
+                
+                cycleCounter = 0; // Gate CLOSED → cancel any active cycles
             }
+
+            // Advance state machine
             isWaitingGateState = !isWaitingGateState;
         }
 
-        // Check
+        // =====================
+        // AUTO-OPEN LOGIC (OBJECT RELEASE)
+        // Opens gate after it has been closed long enough
+        // =====================
+
         if (isWaitingGateState && gateTimer.milliseconds() >= recoveryPause) {
+            
+            // OPEN gate → allow exactly one object to pass
             GateState = true;
             bot.setServoPos(true);
             isWaitingGateState = false;
 
             if (cycleCounter > 0 && cycleCounter < MAX_CYCLES) {
+                
+                // Count one released object
                 cycleCounter++;
                 gateTimer.reset();
             } else {
+                // Max objects released → stop cycling
                 cycleCounter = 0;
             }
         }
         // multi cycle Continuation
 
+        // =====================
+        // AUTO-CLOSE LOGIC (BLOCK NEXT OBJECT)
+        // Ensures only one object passes per cycle
+        // =====================
         if (!isWaitingGateState && cycleCounter > 0 && gateTimer.milliseconds() >= recoveryDelay) {
+            
+            // CLOSE gate to block the next object
             GateState = false;
             bot.setServoPos(false);
+
+            // Prepare for next open if cycles remain
             isWaitingGateState = true;
             gateTimer.reset();
         }
 
-        // redundancy
+        // =====================
+        // REDUNDANCY / SAFETY
+        // Ensures gate remains open if commanded open
+        // =====================
         if (GateState) {
             bot.setServoPos(true);
         }
