@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.OldAutos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -14,7 +15,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.fullCloseShootingVelocity;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.midCloseShootingVelocity;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.recoveryDelay;
-
+@Disabled
 @Autonomous(name = "BlueHigh", group = "Autonomous")
 public class blueHigh extends LinearOpMode {
 
