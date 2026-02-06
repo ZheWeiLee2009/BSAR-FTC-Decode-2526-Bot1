@@ -6,7 +6,7 @@ import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 
-public class U_redPartnerPaths {
+public class UredPartnerPathsGate0 {
     public PathChain preload;
     public PathChain entry1;
     public PathChain gateOpen;
@@ -18,14 +18,14 @@ public class U_redPartnerPaths {
     public PathChain ExitN1;
     public PathChain leave;
 
-    public U_redPartnerPaths(Follower follower) {
+    public UredPartnerPathsGate0(Follower follower) {
         preload = follower.pathBuilder().addPath(
                         new BezierLine(
                                 new Pose(125.845, 121.307),
 
                                 new Pose(90.980, 89.948)
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(37.000), Math.toRadians(46.000))
+                ).setLinearHeadingInterpolation(Math.toRadians(37.000), Math.toRadians(40.000))
                 .setTimeoutConstraint(50)
                 .build();
 
@@ -42,7 +42,7 @@ public class U_redPartnerPaths {
         gateOpen = follower.pathBuilder().addPath(
                         new BezierCurve(
                                 new Pose(128.300, 83.760),
-                                new Pose(118.540, 77.335),
+                                new Pose(98.540, 80),
                                 new Pose(128.800, 76.098)
                         )
                 ).setConstantHeadingInterpolation(Math.toRadians(0.000))
@@ -55,8 +55,10 @@ public class U_redPartnerPaths {
 
                                 new Pose(90.567, 89.948)
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(0.000), Math.toRadians(46.000))
+
+                ).setLinearHeadingInterpolation(Math.toRadians(0.000), Math.toRadians(40.000))
                 .setTimeoutConstraint(50)
+                .setBrakingStrength(1.25)
                 .build();
 
         align2 = follower.pathBuilder().addPath(
@@ -65,7 +67,7 @@ public class U_redPartnerPaths {
 
                                 new Pose(100.782, 59.209)
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(46.000), Math.toRadians(0.000))
+                ).setLinearHeadingInterpolation(Math.toRadians(40.000), Math.toRadians(0.000))
                 .setTimeoutConstraint(50)
                 .build();
 
@@ -85,7 +87,7 @@ public class U_redPartnerPaths {
                                 new Pose(100.700, 59.200),
                                 new Pose(90.774, 89.948)
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(0.000), Math.toRadians(46.000))
+                ).setLinearHeadingInterpolation(Math.toRadians(0.000), Math.toRadians(40.000))
                 .setTimeoutConstraint(50)
                 .build();
 
@@ -93,19 +95,19 @@ public class U_redPartnerPaths {
                         new BezierLine(
                                 new Pose(90.774, 89.948),
 
-                                new Pose(132.182, 20.630)
+                                new Pose(130.000, 14)
                         )
-                ).setTangentHeadingInterpolation()
+                ).setConstantHeadingInterpolation(Math.toRadians(292.000))
 
                 .build();
 
         ExitN1 = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(132.182, 20.630),
+                                new Pose(130.000, 14),
 
                                 new Pose(90.774, 89.948)
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(302.000), Math.toRadians(46.000))
+                ).setLinearHeadingInterpolation(Math.toRadians(292.000), Math.toRadians(40.000))
                 .setTimeoutConstraint(50)
                 .build();
 
@@ -113,9 +115,9 @@ public class U_redPartnerPaths {
                         new BezierLine(
                                 new Pose(90.774, 89.948),
 
-                                new Pose(111.588, 77.323)
+                                new Pose(111.588, 90)
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(46.000), Math.toRadians(0.000))
+                ).setLinearHeadingInterpolation(Math.toRadians(40.000), Math.toRadians(0.000))
                 .setNoDeceleration()
                 .build();
     }
