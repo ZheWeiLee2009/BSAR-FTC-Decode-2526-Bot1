@@ -1,19 +1,18 @@
 package org.firstinspires.ftc.teamcode.pedroPaths;
 
 import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 
-public class UBlueFar {
+public class WABlueFarShootAuto {
     public PathChain exit;
     public PathChain preload;
     public PathChain grab1;
     public PathChain exit1;
     public PathChain leave;
 
-    public UBlueFar(Follower follower) {
+    public WABlueFarShootAuto(Follower follower) {
         exit = follower.pathBuilder().addPath(
                         new BezierLine(
                                 new Pose(56.000, 9.000),
@@ -30,7 +29,7 @@ public class UBlueFar {
 
                                 new Pose(60.000, 14.000)
                         )
-                ).setConstantHeadingInterpolation(Math.toRadians(105))
+                ).setConstantHeadingInterpolation(Math.toRadians(108))
                 .setTimeoutConstraint(500)
                 .build();
 
@@ -50,7 +49,7 @@ public class UBlueFar {
 
                                 new Pose(60.000, 14.000)
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(105))
+                ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(108))
                 .setTimeoutConstraint(500)
                 .build();
 

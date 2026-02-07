@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.FarShootingVelocity;
-import static org.firstinspires.ftc.teamcode.Config.RobotConstants.recoveryDelay;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.autoRecoveryPause;
+import static org.firstinspires.ftc.teamcode.Config.RobotConstants.recoveryDelay;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
@@ -14,8 +14,8 @@ import org.firstinspires.ftc.teamcode.Config.Drivetrain;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.teamcode.pedroPaths.WABlueFarShootAuto;
 
-@Autonomous(name = "WABlueFar", group = "Weeping Angels")
-public class WABlueFar extends LinearOpMode {
+@Autonomous(name = "WARedFar", group = "Weeping Angels")
+public class WARedFar extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
@@ -33,7 +33,7 @@ public class WABlueFar extends LinearOpMode {
         follower = Constants.createFollower(hardwareMap);
 
         // Starting position of Robot
-        follower.setStartingPose(new Pose(56.000, 9.000, Math.toRadians(90)));
+        follower.setStartingPose(new Pose(88.000, 9.000, Math.toRadians(90)));
 
         WABlueFarShootAuto paths;
         paths = new WABlueFarShootAuto(follower);
