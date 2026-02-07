@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.pedroPaths.technoBlueGateAuto1;
+import org.firstinspires.ftc.teamcode.pedroPaths.techno.technoBlueGateAuto1;
 
 
 @Autonomous(name = "technoBluePartner_Gate1", group = "techno")

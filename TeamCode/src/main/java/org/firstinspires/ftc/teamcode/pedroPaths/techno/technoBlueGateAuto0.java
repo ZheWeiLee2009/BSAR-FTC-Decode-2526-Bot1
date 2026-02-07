@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.pedroPaths;
+package org.firstinspires.ftc.teamcode.pedroPaths.techno;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierCurve;
@@ -6,11 +6,11 @@ import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 
-public class technoBlueGateAuto1 {
+public class technoBlueGateAuto0 {
     public PathChain preload;
     public PathChain entry1;
-    public PathChain exit1;
     public PathChain gateOpen;
+    public PathChain exit1;
     public PathChain align2;
     public PathChain entry2;
     public PathChain exit2;
@@ -18,14 +18,14 @@ public class technoBlueGateAuto1 {
     public PathChain ExitN1;
     public PathChain leave;
 
-    public technoBlueGateAuto1(Follower follower) {
+    public technoBlueGateAuto0(Follower follower) {
         preload = follower.pathBuilder().addPath(
                         new BezierLine(
                                 new Pose(18.155, 121.307),
 
                                 new Pose(53.020, 89.948)
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(134))
+                ).setLinearHeadingInterpolation(Math.toRadians(143), Math.toRadians(140))
                 .setTimeoutConstraint(50)
                 .build();
 
@@ -39,33 +39,35 @@ public class technoBlueGateAuto1 {
 
                 .build();
 
-        exit1 = follower.pathBuilder().addPath(
-                        new BezierLine(
-                                new Pose(15.700, 83.760),
-
-                                new Pose(53.433, 89.948)
-                        )
-                ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(134))
-                .setTimeoutConstraint(50)
-                .build();
-
         gateOpen = follower.pathBuilder().addPath(
                         new BezierCurve(
-                                new Pose(53.433, 89.948),
-                                new Pose(25.460, 77.335),
+                                new Pose(15.700, 83.760),
+                                new Pose(45.460, 80),
                                 new Pose(15.200, 76.098)
                         )
                 ).setConstantHeadingInterpolation(Math.toRadians(180))
                 .setTimeoutConstraint(500)
                 .build();
 
-        align2 = follower.pathBuilder().addPath(
-                        new BezierCurve(
+        exit1 = follower.pathBuilder().addPath(
+                        new BezierLine(
                                 new Pose(15.200, 76.098),
-                                new Pose(75.922, 69.736),
+
+                                new Pose(53.433, 89.948)
+                        )
+
+                ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(140))
+                .setTimeoutConstraint(50)
+                .setBrakingStrength(1.25)
+                .build();
+
+        align2 = follower.pathBuilder().addPath(
+                        new BezierLine(
+                                new Pose(53.433, 89.948),
+
                                 new Pose(43.218, 59.209)
                         )
-                ).setConstantHeadingInterpolation(Math.toRadians(180))
+                ).setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(180))
                 .setTimeoutConstraint(50)
                 .build();
 
@@ -85,7 +87,7 @@ public class technoBlueGateAuto1 {
                                 new Pose(43.300, 59.200),
                                 new Pose(53.226, 89.948)
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(134))
+                ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(140))
                 .setTimeoutConstraint(50)
                 .build();
 
@@ -93,19 +95,19 @@ public class technoBlueGateAuto1 {
                         new BezierLine(
                                 new Pose(53.226, 89.948),
 
-                                new Pose(14.000, 14.000)
+                                new Pose(14, 14)
                         )
-                ).setTangentHeadingInterpolation()
-                .setTimeoutConstraint(50)
+                ).setConstantHeadingInterpolation(Math.toRadians(248))
+
                 .build();
 
         ExitN1 = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(14.000, 14.000),
+                                new Pose(14, 14),
 
                                 new Pose(53.226, 89.948)
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(238), Math.toRadians(134))
+                ).setLinearHeadingInterpolation(Math.toRadians(248), Math.toRadians(140))
                 .setTimeoutConstraint(50)
                 .build();
 
@@ -113,12 +115,11 @@ public class technoBlueGateAuto1 {
                         new BezierLine(
                                 new Pose(53.226, 89.948),
 
-                                new Pose(32.412, 92)
+                                new Pose(32.412, 90)
                         )
-                ).setLinearHeadingInterpolation(Math.toRadians(134), Math.toRadians(180))
+                ).setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(180))
                 .setNoDeceleration()
                 .build();
     }
 }
-
   

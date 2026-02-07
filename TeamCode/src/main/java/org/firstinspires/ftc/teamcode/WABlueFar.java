@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.pedroPaths.WABlueFarShootAuto;
+import org.firstinspires.ftc.teamcode.pedroPaths.WA.WABlueFarShootAuto;
 
 @Autonomous(name = "WABlueFar", group = "Weeping Angels")
 public class WABlueFar extends LinearOpMode {
