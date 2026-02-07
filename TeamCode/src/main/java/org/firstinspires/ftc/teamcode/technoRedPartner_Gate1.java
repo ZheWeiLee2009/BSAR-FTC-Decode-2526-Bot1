@@ -12,11 +12,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.pedroPaths.UredPartnerPathsGate0;
+import org.firstinspires.ftc.teamcode.pedroPaths.technoRedGateAuto0;
 
 
-@Autonomous(name = "untestedredPartner_Gate0", group = "untested")
-public class untestedRedPartner_Gate0 extends LinearOpMode {
+@Autonomous(name = "technoRedPartner_Gate1", group = "techno")
+public class technoRedPartner_Gate1 extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
@@ -37,8 +37,8 @@ public class untestedRedPartner_Gate0 extends LinearOpMode {
         // Starting position of Robot
         follower.setStartingPose(new Pose(125.845, 121.307, Math.toRadians(46.000)));
 
-        UredPartnerPathsGate0 paths;
-        paths = new UredPartnerPathsGate0(follower);
+        technoRedGateAuto0 paths;
+        paths = new technoRedGateAuto0(follower);
 
         telemetry.addLine("Blue Auto Ready!");
         telemetry.update();
@@ -47,7 +47,7 @@ public class untestedRedPartner_Gate0 extends LinearOpMode {
         if (isStopRequested()) return;
 
         // Start
-        bot.Flywheel.setVelocity(closerShootingVel);
+        bot.Flywheel.setVelocity(standardShootingVel);
         follower.setMaxPower(.85);
         bot.setIntake("full");
 

@@ -6,7 +6,7 @@ import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 
-public class U_bluePartnerPaths_Gate1 {
+public class technoBlueGateAuto1 {
     public PathChain preload;
     public PathChain entry1;
     public PathChain exit1;
@@ -18,7 +18,7 @@ public class U_bluePartnerPaths_Gate1 {
     public PathChain ExitN1;
     public PathChain leave;
 
-    public U_bluePartnerPaths_Gate1(Follower follower) {
+    public technoBlueGateAuto1(Follower follower) {
         preload = follower.pathBuilder().addPath(
                         new BezierLine(
                                 new Pose(18.155, 121.307),

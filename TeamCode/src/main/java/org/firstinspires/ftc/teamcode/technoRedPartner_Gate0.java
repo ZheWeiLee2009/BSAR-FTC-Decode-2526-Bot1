@@ -12,11 +12,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.pedroPaths.U_bluePartnerPaths_Gate1;
+import org.firstinspires.ftc.teamcode.pedroPaths.technoRedGateAuto0;
 
 
-@Autonomous(name = "untestedBluePartner_Gate1", group = "untested")
-public class untestedBluePartner_Gate1 extends LinearOpMode {
+@Autonomous(name = "technoRedPartner_Gate0", group = "techno")
+public class technoRedPartner_Gate0 extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
@@ -35,10 +35,10 @@ public class untestedBluePartner_Gate1 extends LinearOpMode {
         follower = Constants.createFollower(hardwareMap);
 
         // Starting position of Robot
-        follower.setStartingPose(new Pose(18.155, 121.307, Math.toRadians(143)));
+        follower.setStartingPose(new Pose(125.845, 121.307, Math.toRadians(46.000)));
 
-        U_bluePartnerPaths_Gate1 paths;
-        paths = new U_bluePartnerPaths_Gate1(follower);
+        technoRedGateAuto0 paths;
+        paths = new technoRedGateAuto0(follower);
 
         telemetry.addLine("Blue Auto Ready!");
         telemetry.update();
@@ -47,7 +47,7 @@ public class untestedBluePartner_Gate1 extends LinearOpMode {
         if (isStopRequested()) return;
 
         // Start
-        bot.Flywheel.setVelocity(closerShootingVel);
+        bot.Flywheel.setVelocity(standardShootingVel);
         follower.setMaxPower(.85);
         bot.setIntake("full");
 
@@ -59,14 +59,13 @@ public class untestedBluePartner_Gate1 extends LinearOpMode {
         // Cycle 2
         follower.setMaxPower(.80);
         follow(paths.entry1);
+        follow(paths.gateOpen);
+        sleep(500);
         follower.setMaxPower(.85);
         follow(paths.exit1);
         triRelease();
 
         // Cycle 3
-        follower.setMaxPower(.60);
-        follow(paths.gateOpen);
-        sleep(500);
         follower.setMaxPower(.80);
         follow(paths.align2);
         follow(paths.entry2);
