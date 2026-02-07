@@ -47,7 +47,7 @@ public class optimalBlueHigh extends LinearOpMode {
         if (isStopRequested()) return;
 
         // Start
-        bot.Flywheel.setVelocity(closerShootingVel);
+        bot.Flywheel.setVelocity(standardShootingVel);
         follower.setMaxPower(.85);
         bot.setIntake("full");
 
