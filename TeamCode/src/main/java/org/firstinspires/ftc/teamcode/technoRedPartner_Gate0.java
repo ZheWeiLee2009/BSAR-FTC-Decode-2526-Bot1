@@ -35,7 +35,7 @@ public class technoRedPartner_Gate0 extends LinearOpMode {
         follower = Constants.createFollower(hardwareMap);
 
         // Starting position of Robot
-        follower.setStartingPose(new Pose(125.845, 121.307, Math.toRadians(46.000)));
+        follower.setStartingPose(new Pose(125.845, 121.307, Math.toRadians(37.000)));
 
         technoRedGateAuto0 paths;
         paths = new technoRedGateAuto0(follower);
@@ -73,10 +73,10 @@ public class technoRedPartner_Gate0 extends LinearOpMode {
         follow(paths.exit2);
         triRelease();
 
-        // Grab Cycles
-        follow(paths.grabN1);
-        follow(paths.ExitN1);
-        triRelease();
+//        // Grab Cycles
+//        follow(paths.grabN1);
+//        follow(paths.ExitN1);
+//        triRelease();
 
         //Exit
         bot.setIntake("off");

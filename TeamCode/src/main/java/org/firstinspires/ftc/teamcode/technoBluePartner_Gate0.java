@@ -75,10 +75,10 @@ public class technoBluePartner_Gate0 extends LinearOpMode {
         follow(paths.exit2);
         triRelease();
 
-        // Grab Cycles
-        follow(paths.grabN1);
-        follow(paths.ExitN1);
-        triRelease();
+//        // Grab Cycles
+//        follow(paths.grabN1);
+//        follow(paths.ExitN1);
+//        triRelease();
 
         //Exit
         bot.setIntake("off");
