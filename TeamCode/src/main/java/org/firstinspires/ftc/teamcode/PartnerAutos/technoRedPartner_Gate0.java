@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.PartnerAutos;
 
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.fullCloseShootingVelocity;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.midCloseShootingVelocity;
@@ -12,11 +12,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.pedroPaths.techno.technoBlueGateAuto1;
+import org.firstinspires.ftc.teamcode.pedroPaths.techno.technoRedGateAuto0;
 
 
-@Autonomous(name = "technoBluePartner_Gate1", group = "techno")
-public class technoBluePartner_Gate1 extends LinearOpMode {
+@Autonomous(name = "technoRedPartner_Gate0", group = "techno")
+public class technoRedPartner_Gate0 extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
@@ -35,10 +35,10 @@ public class technoBluePartner_Gate1 extends LinearOpMode {
         follower = Constants.createFollower(hardwareMap);
 
         // Starting position of Robot
-        follower.setStartingPose(new Pose(18.155, 121.307, Math.toRadians(143)));
+        follower.setStartingPose(new Pose(125.845, 121.307, Math.toRadians(37.000)));
 
-        technoBlueGateAuto1 paths;
-        paths = new technoBlueGateAuto1(follower);
+        technoRedGateAuto0 paths;
+        paths = new technoRedGateAuto0(follower);
 
         telemetry.addLine("Blue Auto Ready!");
         telemetry.update();
@@ -59,14 +59,13 @@ public class technoBluePartner_Gate1 extends LinearOpMode {
         // Cycle 2
         follower.setMaxPower(.80);
         follow(paths.entry1);
+        follow(paths.gateOpen);
+        sleep(500);
         follower.setMaxPower(.85);
         follow(paths.exit1);
         triRelease();
 
         // Cycle 3
-        follower.setMaxPower(.60);
-        follow(paths.gateOpen);
-        sleep(500);
         follower.setMaxPower(.80);
         follow(paths.align2);
         follow(paths.entry2);

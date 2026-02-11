@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.PartnerAutos;
 
-import static org.firstinspires.ftc.teamcode.Config.RobotConstants.FarShootingVelocity;
-import static org.firstinspires.ftc.teamcode.Config.RobotConstants.autoRecoveryPause;
+import static org.firstinspires.ftc.teamcode.Config.RobotConstants.fullCloseShootingVelocity;
+import static org.firstinspires.ftc.teamcode.Config.RobotConstants.midCloseShootingVelocity;
 import static org.firstinspires.ftc.teamcode.Config.RobotConstants.recoveryDelay;
 
 import com.pedropathing.follower.Follower;
@@ -12,15 +12,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.pedroPaths.WA.WABlueFarShootAuto;
+import org.firstinspires.ftc.teamcode.pedroPaths.techno.technoRedGateAuto0;
 
-@Autonomous(name = "WARedFar", group = "Weeping Angels")
-public class WARedFar extends LinearOpMode {
+
+@Autonomous(name = "technoRedPartner_Gate1", group = "techno")
+public class technoRedPartner_Gate1 extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
 
-    private final int standardShootingVel = FarShootingVelocity;
+    private final int standardShootingVel = fullCloseShootingVelocity;
+    private final int closerShootingVel = midCloseShootingVelocity;
 
 
     public void runOpMode() throws InterruptedException{
@@ -33,10 +35,10 @@ public class WARedFar extends LinearOpMode {
         follower = Constants.createFollower(hardwareMap);
 
         // Starting position of Robot
-        follower.setStartingPose(new Pose(88.000, 9.000, Math.toRadians(90)));
+        follower.setStartingPose(new Pose(125.845, 121.307, Math.toRadians(37.000)));
 
-        WABlueFarShootAuto paths;
-        paths = new WABlueFarShootAuto(follower);
+        technoRedGateAuto0 paths;
+        paths = new technoRedGateAuto0(follower);
 
         telemetry.addLine("Blue Auto Ready!");
         telemetry.update();
@@ -50,33 +52,31 @@ public class WARedFar extends LinearOpMode {
         bot.setIntake("full");
 
         // Cycle 1 (Preload)
-        follow(paths.exit);
-        follower.setMaxPower(.8);
         follow(paths.preload);
         bot.Flywheel.setVelocity(standardShootingVel);
-        sleep(1500);
-        triTimedRelease();
+        triRelease();
 
-        // extra Cycles 1 (gamble)
-        bot.setIntake("full");
+        // Cycle 2
+        follower.setMaxPower(.80);
+        follow(paths.entry1);
+        follow(paths.gateOpen);
+        sleep(500);
         follower.setMaxPower(.85);
-        follow(paths.grab1);
-        follower.setMaxPower(.8);
         follow(paths.exit1);
-        bot.Flywheel.setVelocity(standardShootingVel);
-        sleep(1500);
-        triTimedRelease();
+        triRelease();
 
-        // extra Cycles 1 (gamble)
-        bot.setIntake("full");
+        // Cycle 3
+        follower.setMaxPower(.80);
+        follow(paths.align2);
+        follow(paths.entry2);
         follower.setMaxPower(.85);
-        follow(paths.grab1);
-        follower.setMaxPower(.8);
-        follow(paths.exit1);
-        bot.Flywheel.setVelocity(standardShootingVel);
-        sleep(1500);
-        triTimedRelease();
+        follow(paths.exit2);
+        triRelease();
 
+//        // Grab Cycles
+//        follow(paths.grabN1);
+//        follow(paths.ExitN1);
+//        triRelease();
 
         //Exit
         bot.setIntake("off");
@@ -86,23 +86,15 @@ public class WARedFar extends LinearOpMode {
         follow(paths.leave);
         telemetry.addLine("Auto Complete.");
         telemetry.update();
-
     }
 
     // methods
-    public void triTimedRelease() throws InterruptedException {
-        for (int i = 0; i < 3; i++) {
-            bot.Flywheel.setVelocity(standardShootingVel);
-            bot.setIntake("full");
-            bot.fullDown();
-            sleep(autoRecoveryPause);
-            bot.setServoPos(true);
-            bot.setIntake("half");
-            sleep(recoveryDelay + 50);
-        }
-            sleep(recoveryDelay + 50);
-            bot.Flywheel.setVelocity(standardShootingVel); //redundancy
-
+    public void triRelease() throws InterruptedException {
+        bot.Flywheel.setVelocity(standardShootingVel);
+        bot.fullDown();
+        sleep(recoveryDelay + 50);
+        bot.setServoPos(true);
+        bot.Flywheel.setVelocity(standardShootingVel); //redundancy
     }
 
     private void follow(com.pedropathing.paths.PathChain path) {
@@ -117,7 +109,6 @@ public class WARedFar extends LinearOpMode {
             telemetry.addData("Heading", Math.toDegrees(follower.getPose().getHeading()));
 
             telemetry.addData("\n\nFlywheel: ", bot.Flywheel.getPower());
-            telemetry.addData("TPS:", bot.Flywheel.getVelocity());
             telemetry.addData("Intake: ", bot.Intake.getPower());
 
             telemetry.addData("\nFL: ", bot.leftFrontDrive.getPower());
