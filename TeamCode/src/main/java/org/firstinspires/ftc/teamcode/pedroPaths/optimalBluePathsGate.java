@@ -6,9 +6,10 @@ import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 
-public class optimalBluePaths {
+public class optimalBluePathsGate {
     public PathChain preload;
     public PathChain entry1;
+    public PathChain gateOpen;
     public PathChain exit1;
     public PathChain align2;
     public PathChain entry2;
@@ -18,7 +19,7 @@ public class optimalBluePaths {
     public PathChain exit3;
     public PathChain leave;
 
-    public optimalBluePaths(Follower follower) {
+    public optimalBluePathsGate(Follower follower) {
         preload = follower.pathBuilder().addPath(
                         new BezierLine(
                                 new Pose(18.155, 121.307),
@@ -32,15 +33,26 @@ public class optimalBluePaths {
         entry1 = follower.pathBuilder().addPath(
                         new BezierCurve(
                                 new Pose(53.020, 89.948),
-                                new Pose(44.523, 82.909),
-                                new Pose(14.700, 83.760)
+                                new Pose(35.563, 83.510),
+                                new Pose(15.700, 83.760)
                         )
                 ).setTangentHeadingInterpolation()
+
+                .build();
+
+        gateOpen = follower.pathBuilder().addPath(
+                        new BezierCurve(
+                                new Pose(15.700, 83.760),
+                                new Pose(45.460, 80),
+                                new Pose(15.200, 76.098)
+                        )
+                ).setConstantHeadingInterpolation(Math.toRadians(180))
+                .setTimeoutConstraint(500)
                 .build();
 
         exit1 = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(14.700, 83.760),
+                                new Pose(15.200, 76.098),
 
                                 new Pose(53.433, 89.948)
                         )
@@ -71,7 +83,7 @@ public class optimalBluePaths {
         exit2 = follower.pathBuilder().addPath(
                         new BezierCurve(
                                 new Pose(11.500, 59.209),
-                                new Pose(47.162, 57.495),
+                                new Pose(43.300, 59.200),
                                 new Pose(53.226, 89.948)
                         )
                 ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(134))
@@ -112,7 +124,7 @@ public class optimalBluePaths {
                         new BezierLine(
                                 new Pose(53.226, 89.948),
 
-                                new Pose(40.377, 63.111)
+                                new Pose(19.572, 89.476)
                         )
                 ).setLinearHeadingInterpolation(Math.toRadians(134), Math.toRadians(180))
                 .setNoDeceleration()

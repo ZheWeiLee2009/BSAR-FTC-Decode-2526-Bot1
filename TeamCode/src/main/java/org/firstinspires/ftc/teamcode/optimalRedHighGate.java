@@ -12,16 +12,16 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Config.Drivetrain;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import org.firstinspires.ftc.teamcode.pedroPaths.optimalRedFarPaths;
+import org.firstinspires.ftc.teamcode.pedroPaths.optimalRedPathsGate;
 
-@Autonomous(name = "optimalRedFarHigh", group = ".")
-public class optimalRedFarHigh extends LinearOpMode {
+@Autonomous(name = "optimalRedHighGate", group = ".")
+public class optimalRedHighGate extends LinearOpMode {
 
     private Drivetrain bot;
     private Follower follower;
 
-    private final int standardShootingVel = fullCloseShootingVelocity + 12;
-    private final int closerShootingVel = midCloseShootingVelocity + 12;
+    private final int standardShootingVel = fullCloseShootingVelocity;
+    private final int closerShootingVel = midCloseShootingVelocity;
 
 
     public void runOpMode() throws InterruptedException{
@@ -34,10 +34,10 @@ public class optimalRedFarHigh extends LinearOpMode {
         follower = Constants.createFollower(hardwareMap);
 
         // Starting position of Robot
-        follower.setStartingPose(new Pose(88.000, 8.000, Math.toRadians(90)));
+        follower.setStartingPose(new Pose(125.845, 121.307, Math.toRadians(37)));
 
-        optimalRedFarPaths paths;
-        paths = new optimalRedFarPaths(follower);
+        optimalRedPathsGate paths;
+        paths = new optimalRedPathsGate(follower);
 
         telemetry.addLine("Red Auto Ready!");
         telemetry.update();
@@ -57,6 +57,22 @@ public class optimalRedFarHigh extends LinearOpMode {
 
         // Cycle 2
         follower.setMaxPower(.80);
+        follow(paths.entry1);
+        follow(paths.gateOpen);
+        follower.setMaxPower(.85);
+        follow(paths.exit1);
+        triRelease();
+
+        // Cycle 3
+        follower.setMaxPower(.80);
+        follow(paths.align2);
+        follow(paths.entry2);
+        follower.setMaxPower(.85);
+        follow(paths.exit2);
+        triRelease();
+
+        // Cycle 4
+        follower.setMaxPower(.80);
         follow(paths.align3);
         follow(paths.entry3);
         follower.setMaxPower(.85);
@@ -71,7 +87,6 @@ public class optimalRedFarHigh extends LinearOpMode {
         follow(paths.leave);
         telemetry.addLine("Auto Complete.");
         telemetry.update();
-
     }
 
     // methods
